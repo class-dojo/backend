@@ -1,1 +1,12 @@
-# escootie frontend
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 120
+
+[{*.ts,*.tsx}]
+indent_style = tab
+indent_size = 4
+
+ij_typescript_force_semicolon_style = true
