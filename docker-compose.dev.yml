@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  backend:
+    command: bash -c "npm install && npm start"
+
+  s3:
+    volumes:
+      - ./s3-data:/data
+    ports:
+      - "9001:9001"
