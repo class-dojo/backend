@@ -8,7 +8,7 @@ jobs:
   qa:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone
+      - name: Clone repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -25,8 +25,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: Build
         run: |
           docker-compose up -d
-#          docker-compose run backend make -C release/ qa
           docker-compose down
+# docker-compose run backend make -C release/ qa (ONE LINE UP)
