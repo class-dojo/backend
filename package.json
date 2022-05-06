@@ -2,10 +2,21 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for ClassDojo",
-  "main": "index.js",
+  "main": "local.ts",
   "scripts": {
     "start": "nodemon local.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -28,6 +39,11 @@
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
   }
