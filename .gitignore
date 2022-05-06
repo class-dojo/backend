@@ -1,5 +1,7 @@
 /node_modules/
 .idea/
 .env
+.eslintcache
+
 
 /s3-data/
