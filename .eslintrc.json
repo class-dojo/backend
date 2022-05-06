@@ -34,7 +34,7 @@
       "always"
     ],
     "no-undef": 0,
-    "no-unsued-vars": 1,
+    "no-unused-vars": 1,
     "space-before-blocks": "error",
     "space-before-function-paren": "error"
   }
