@@ -1,7 +1,7 @@
 import { IFaceDetails } from '../interfaces';
 
 
-export function cleanData (faceDetails : never) {
+export function removeUselessProps (faceDetails : never) {
   const cleanFaceDetails : IFaceDetails = {
     Smile: {
       Value: false,
@@ -31,3 +31,7 @@ export function cleanData (faceDetails : never) {
   }
   return cleanFaceDetails;
 }
+
+
+
+
