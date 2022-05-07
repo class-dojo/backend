@@ -1,0 +1,15 @@
+parameters:
+  config.path: config/config.yml
+
+services:
+  version:
+    class: 'components/Version'
+
+  # Controllers
+  healthCheckController:
+    class: 'controllers/HealthCheckController'
+    arguments:
+      - '@version'
+
+  testController:
+    class: 'controllers/TestController'
