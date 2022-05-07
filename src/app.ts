@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import express, { Express, Request, Response } from 'express';
 
