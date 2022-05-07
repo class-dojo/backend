@@ -3,18 +3,6 @@ export interface IRecognitionResponse {
 }
 
 export interface IFaceDetails {
-  Smile: {
-    Value: boolean,
-    Confidence: number
-  },
-  AgeRange: {
-    Low: number,
-    High: number,
-},
-  Gender: {
-    Value: string,
-    Confidence: number
-},
   EyesOpen: {
   Value: boolean,
   Confidence: number
