@@ -52,7 +52,7 @@ export function calculateAttentionScore (facesAnalysisArr : IFaceDetails[]) {
   for (const faceDetails of facesAnalysisArr) {
     emotionsArray.push(faceDetails.Emotions[0].Type);
   }
-  //!!! decisions have to be taken here
+  //!!! decisions have to be taken here 10 30%
 }
 
 
