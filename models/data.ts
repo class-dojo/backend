@@ -1,8 +1,7 @@
 import { IFaceDetails } from '../interfaces';
 
 
-function cleanData (faceDetails : IFaceDetails) {
-  const usefulFaceProps : string[] = ['Smile','AgeRange','Gender','EyesOpen','Emotions','Pose'];
+export function cleanData (faceDetails : never) {
   const cleanFaceDetails : IFaceDetails = {
     Smile: {
       Value: false,
@@ -27,8 +26,8 @@ function cleanData (faceDetails : IFaceDetails) {
       Pitch: 0
     }
   };
-  for (const prop of usefulFaceProps) {
-    cleanFaceDetails[prop] = faceDetails[prop];
+  for (const key in cleanFaceDetails) {
+    cleanFaceDetails[key as keyof IFaceDetails] = faceDetails[key as keyof IFaceDetails];
   }
   return cleanFaceDetails;
 }
