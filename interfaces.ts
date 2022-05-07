@@ -8,14 +8,9 @@ export interface IFaceDetails {
   Confidence: number
 },
   Emotions: IEmotion[],
-  Pose: {
-    Roll: number,
-    Yaw: number,
-    Pitch: number,
-  }
 }
 
 export interface IEmotion {
-    Type: boolean,
+    Type: string,
     Confidence: number
 }
