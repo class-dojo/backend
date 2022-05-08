@@ -19,8 +19,11 @@ export default class HealthCheckController extends BaseController {
     const result = {
       status: 'Healthy :)',
       versionInfo: this.version.getVersion(),
+      buildDate: this.version.getBuildDate(),
       stable: this.version.isStable(),
     };
+
+    console.log(result);
 
     response.setHeader('Content-Type', 'application/json');
     response.status(200).json(result);

@@ -16,6 +16,7 @@ module.exports = {
   ],
   testPathIgnorePatterns: [
     '<rootDir>/tests/mocks.ts',
+    '<rootDir>/tests/testContainer.ts',
   ],
   maxConcurrency: 1,
   transform: {

@@ -6,7 +6,7 @@ import fn = jest.fn;
 
 describe('Test Controller', () => {
   const container = containerBuilder();
-  const healthCheckController = container.get('testController') as TestController;
+  const testController = container.get('testController') as TestController;
 
   test('run action Default', () => {
 
@@ -26,7 +26,7 @@ describe('Test Controller', () => {
       }) as unknown,
     } as Response;
 
-    healthCheckController.actionDefault(request, response);
+    testController.actionDefault(request, response);
 
     expect(response.json).toBeCalledTimes(1);
   });
