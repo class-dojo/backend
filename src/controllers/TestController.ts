@@ -9,7 +9,8 @@ export default class TestController extends BaseController {
     });
   }
 
-  async actionDefault (request: Request, response: Response): Promise<void> {
+  actionDefault (request: Request, response: Response): void {
+
     const result = {
       message: 'hello world'
     };
