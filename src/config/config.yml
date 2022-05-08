@@ -1,0 +1,4 @@
+parameters:
+  s3:
+    imageBucketName: ''
+    endpoint: ''

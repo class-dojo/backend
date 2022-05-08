@@ -2,6 +2,12 @@ parameters:
   config.path: config/config.yml
 
 services:
+  # Components
+  configurator:
+    class: 'components/Configurator'
+    arguments:
+      - '%config.path%'
+
   version:
     class: 'components/Version'
 
