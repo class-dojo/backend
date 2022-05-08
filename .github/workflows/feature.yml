@@ -1,9 +1,9 @@
-name: QA
+name: Feature
 on:
   push:
     branches:
       - '*'
-#      - '!master'
+      - '!master'
 jobs:
   qa:
     runs-on: ubuntu-latest
@@ -29,5 +29,5 @@ jobs:
       - name: Build
         run: |
           docker-compose up -d
+          docker-compose run backend make -C production/ package qa
           docker-compose down
-# docker-compose run backend make -C release/ qa (ONE LINE UP)
