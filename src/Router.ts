@@ -3,7 +3,8 @@ import {Router as ExpressRouter} from 'express';
 
 const controllers = [
   'healthCheckController',
-  'testController'
+  'testController',
+  'analyzeController'
 ];
 
 export default class Router {
