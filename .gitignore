@@ -7,3 +7,7 @@
 /log/
 
 /s3-data/
+
+# production
+/production/build/
+/production/release/
