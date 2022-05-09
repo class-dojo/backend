@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 14",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "strict": true,
     "strictNullChecks": false,
     "esModuleInterop": true,

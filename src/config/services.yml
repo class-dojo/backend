@@ -20,5 +20,5 @@ services:
   testController:
     class: 'controllers/TestController'
 
-  ManipualteDataController:
-    class: 'controllers/ManipualteDataController'
+  ManipulateDataController:
+    class: 'controllers/ManipulateDataController'

@@ -10,7 +10,9 @@ export default class ManipulateDataController extends BaseController {
   }
 
   actionDefault (request: Request, response: Response): void {
-    const facesArray = request.body;
+    console.log(request.body.default.FaceDetails,'REQUEST BODY😋');
+
+    const facesArray = request.body.default.FaceDetails;
     const amountOfPeople = AmountOfPeople(facesArray);
     const result = {
       amountOfPeople: amountOfPeople
