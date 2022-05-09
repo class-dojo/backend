@@ -23,7 +23,6 @@
   "bugs": {
     "url": "https://github.com/class-dojo/backend/issues"
   },
-  "type": "module",
   "homepage": "https://github.com/class-dojo/backend#readme",
   "dependencies": {
     "@vendia/serverless-express": "^4.8.0",
