@@ -14,3 +14,10 @@ export interface IEmotion {
     Type: string,
     Confidence: number
 }
+
+
+
+
+
+
+
