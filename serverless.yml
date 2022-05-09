@@ -1,0 +1,61 @@
+# configures the creation of zip artifact
+
+service: classdojo
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!serverless.yml'
+    # aws-sdk is included in Lambda
+    - '!node_modules/**/aws-sdk/**'
+    # common things that node_modules fail to .npmignore
+    - '!node_modules/**/*.md'
+    - '!node_modules/**/*.flow'
+    - '!node_modules/**/*.patch'
+    - '!node_modules/**/*.conf'
+    - '!node_modules/**/*.markdown'
+    - '!node_modules/**/*.coffee'
+    - '!node_modules/**/jsdoc_conf.json'
+    - '!node_modules/**/*Makefile'
+    - '!node_modules/**/Dockerfile'
+    - '!node_modules/**/test/**'
+    - '!node_modules/**/tests/**'
+    - '!node_modules/**/docs/**'
+    - '!node_modules/**/examples/**'
+    - '!node_modules/**/yarn.lock'
+    - '!node_modules/**/package-lock.json'
+    - '!node_modules/**/*.d.ts'
+    - '!node_modules/**/*.map'
+    - '!node_modules/**/AUTHORS'
+    - '!node_modules/**/CODEOWNERS'
+    - '!node_modules/**/OWNERS'
+    - '!node_modules/**/license*'
+    - '!node_modules/**/licence*'
+    - '!node_modules/**/LICENSE*'
+    - '!node_modules/**/LICENCE*'
+    - '!node_modules/**/License*'
+    - '!node_modules/**/Licence*'
+    - '!node_modules/node-dependency-injection/coverage/**'
+    - '!node_modules/node-dependency-injection/.nyc_output'
+    - '!node_modules/@dabh/diagnostics/example.png'
+    - '!node_modules/**/__tests__'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  #memorySize: 512 # in MB, also affects CPU power
+  #timeout: 10 # in seconds
+  versionFunctions: false
+
+functions:
+  classdojo-api:
+    handler: lambda.handler
+    package:
+      patterns:
+        - lambda.ts
+        - version.txt
+        - src/**
+
+plugins:
+  - serverless-plugin-typescript

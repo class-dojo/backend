@@ -3,5 +3,7 @@
 .env
 .eslintcache
 
+#test logs
+/log/
 
 /s3-data/
