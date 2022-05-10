@@ -39,6 +39,7 @@ services:
     class: 'models/ImageModel'
     arguments:
       - '@s3Connection'
+      - '@configurator'
 
   rekognitionModel:
     class: 'models/RekognitionModel'
