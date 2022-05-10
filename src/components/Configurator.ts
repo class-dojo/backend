@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs';
 import yaml from 'js-yaml';
 
@@ -7,36 +6,77 @@ export default class Configurator {
   path = '';
   config = {} as any;
   mapping = {
-    'S3_IMAGEBUCKETNAME': 'parameters.s3.imageBucketName',
+    'S3_BUCKETNAME': 'parameters.s3.imageBucketName',
     'S3_ENDPOINT': 'parameters.s3.endpoint',
   };
 
 
   constructor (configPath = '/../config/config.yml') {
-    // this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
+    console.log(configPath);
+    this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
 
   }
 
   selectAndApplyEnvParams () {
     // loop through mapping
-    // check if each key exists in process.env
-    // if yes, take this.config and replace value
-    // this.config should have updated values at the end
+    const envConfig: any = {};
+    for (const [envVariable, configVariable] of Object.entries(this.mapping)) {
+      // check if each key exists in process.env
+      if (process.env[envVariable]) {
+        let envValue: string | boolean = process.env[envVariable];
 
-    try {
-      console.log(this.config.parameters.s3);
-    } catch (err: any) {
-      console.error(err.stack);
+        // deal with booleans
+        if (envValue === 'true' || envValue === 'false') {
+          envValue = (envValue === 'true');
+        }
+
+        const paramsPath = configVariable.split('.');
+
+        //if only one param, then can save straight
+        if (paramsPath.length === 1) {
+          envConfig[configVariable] = envValue;
+        } else {
+          const firstKey = paramsPath[0];
+          // if key already exists, need to keep the previous values
+          envConfig[firstKey] = (firstKey in envConfig) ? {...envConfig[firstKey]} : {};
+
+          // pointer
+          let current = envConfig[firstKey];
+
+          // add all the other keys
+          for (const key of paramsPath.slice(1)) {
+            // if last then assign value
+            if (key === paramsPath[paramsPath.length - 1]) {
+              current[key] = envValue;
+
+            } else {
+              // check if key exists
+              current[key] = (key in current) ? {...current[key]} : {};
+            }
+            // move pointer one level
+            current = current[key];
+          }
+        }
+      }
     }
-
-    return;
+    // merge the two configs together
+    this.config = Object.assign(this.config, envConfig);
   }
 
-  parameters (name: string | null = null): string |  Record<string, string> {
+  parameters (name: string | null = null): any {
     // do I have an argument?
-    // if yes, return specific value / values in config tree
-    // if no, return whole config
+    if (name) {
+      // if yes, return specific value / values in config tree
+      const pathKeys = name.split('.');
+      let value = this.config;
+      for (const key of pathKeys) {
+        value = value[key];
+      }
 
-    return 'hello';
+      return value;
+    }
+
+    // if no, return whole config
+    return this.config;
   }
 }
