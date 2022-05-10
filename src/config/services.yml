@@ -35,10 +35,15 @@ services:
       - '@sentimentModel'
 
   # Models
+  s3Model:
+    class: 'models/S3Model'
+    arguments:
+      - '@s3Connection'
+
   imageModel:
     class: 'models/ImageModel'
     arguments:
-      - '@s3Connection'
+      - '@s3Model'
       - '@configurator'
 
   rekognitionModel:

@@ -13,12 +13,13 @@ export default class AnalyzeController extends BaseController {
   }
 
   register (router: Router): void {
-    router.route('/v1/analyze').get((request: Request, response: Response) => {
+    router.route('/analyze').post((request: Request, response: Response) => {
       return this.actionDefault(request, response);
     });
   }
 
   async actionDefault (request: Request, response: Response): Promise<void> {
+    await this.imageModel.checkIfImagesExist(['verycoolcall/image']);
     // get image ids from request
     // check that images exist on S3 bucket - bulk - ImageModel
     // send them to aws rekognition for analysis - SentimentModel
