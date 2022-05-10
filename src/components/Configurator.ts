@@ -15,7 +15,6 @@ export default class Configurator {
 
 
   constructor (configPath = '/../config/config.yml') {
-    console.log(configPath);
     this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
 
   }
