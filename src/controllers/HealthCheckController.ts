@@ -23,8 +23,6 @@ export default class HealthCheckController extends BaseController {
       stable: this.version.isStable(),
     };
 
-    console.log(result);
-
     response.setHeader('Content-Type', 'application/json');
     response.status(200).json(result);
   }

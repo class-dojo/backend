@@ -8,6 +8,9 @@ export const containerBuilder = (): ContainerBuilder => {
   const loader = new YamlFileLoader(container);
   loader.load(__dirname + '/../src/config/services.yml');
 
+  // mock services
+  // container.set('rekognitionConnection', new RekognitionConnectionMock());
+
   container.compile();
 
   return container;
