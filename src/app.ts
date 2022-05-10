@@ -15,10 +15,10 @@ loader.load(__dirname + '/config/services.yml');
 container.compile();
 
 const configurator = container.get('configurator') as Configurator;
-const isRekognitionLocal = configurator.parameters('rekognition.isLocal');
+const environment = configurator.parameters('env');
 
 // todo should be a factory https://github.com/zazoomauro/node-dependency-injection/wiki/Factory
-if (isRekognitionLocal) {
+if (environment === 'dev') {
   container.set('rekognitionConnection', new RekognitionConnectionLocal(configurator));
 }
 
