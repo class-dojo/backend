@@ -5,7 +5,7 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{js,ts}',
   ],
-  coverageDirectory: 'log',
+  coverageDirectory: './log',
   coverageReporters: ['lcov', 'text', 'cobertura'],
   reporters: [
     'default',
