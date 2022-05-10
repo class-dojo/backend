@@ -1,12 +1,13 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
+import {mergeDeep} from './utils';
 
 export default class Configurator {
 
   path = '';
   config: any = {};
   mapping = {
-    'S3_BUCKETNAME': 'parameters.s3.imageBucketName',
+    'S3_BUCKETNAME': 'parameters.s3.bucketName',
     'S3_ENDPOINT': 'parameters.s3.endpoint',
     'AWS_ACCESS_KEY_ID': 'parameters.aws.accessKeyId',
     'AWS_SECRET_ACCESS_KEY': 'parameters.aws.secretAccessKey',
@@ -16,7 +17,7 @@ export default class Configurator {
 
   constructor (configPath = '/../config/config.yml') {
     this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
-
+    this.selectAndApplyEnvParams();
   }
 
   selectAndApplyEnvParams () {
@@ -62,7 +63,7 @@ export default class Configurator {
       }
     }
     // merge the two configs together
-    this.config = Object.assign(this.config, envConfig);
+    mergeDeep(this.config, envConfig);
   }
 
   parameters (name: string | null = null): any {
