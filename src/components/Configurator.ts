@@ -4,10 +4,13 @@ import yaml from 'js-yaml';
 export default class Configurator {
 
   path = '';
-  config = {} as any;
+  config: any = {};
   mapping = {
     'S3_BUCKETNAME': 'parameters.s3.imageBucketName',
     'S3_ENDPOINT': 'parameters.s3.endpoint',
+    'AWS_ACCESS_KEY_ID': 'parameters.aws.accessKeyId',
+    'AWS_SECRET_ACCESS_KEY': 'parameters.aws.secretAccessKey',
+    'ENV': 'parameters.env'
   };
 
 
