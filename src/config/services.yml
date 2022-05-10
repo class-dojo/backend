@@ -1,5 +1,5 @@
 parameters:
-  config.path: config/config.yml
+  config.path: /../config/config.yml
 
 services:
   # Components

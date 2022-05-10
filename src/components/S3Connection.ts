@@ -5,8 +5,9 @@ export default class S3Connection {
   private readonly s3: S3;
 
   constructor (configurator: Configurator) {
-    const { accessKeyId, secretAccessKey, session } = configurator.parameters('aws') as Record<string, string>;
-    const { region, endpoint } = configurator.parameters('s3') as Record<string, string>;
+
+    const { accessKeyId, secretAccessKey, session } = configurator.parameters('parameters.aws') as Record<string, string>;
+    const { region, endpoint } = configurator.parameters('parameters.s3') as Record<string, string>;
     this.s3 = new S3({
       apiVersion: '2006-03-01',
       signatureVersion: 'v4',
