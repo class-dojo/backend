@@ -11,6 +11,8 @@ describe('Configurator', () => {
   process.env.NUMBER = '1';
 
   class TestConfigurator extends Configurator {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     mapping = {
       'TEST_TEST2_TEST3': 'test.test2.test3',
       'TEST_TEST2_TEST4': 'test.test2.test4',
@@ -20,9 +22,9 @@ describe('Configurator', () => {
   }
 
   test('should set environment variables', () => {
-    const configurator = new TestConfigurator('../src/config/config.yml');
-    // configurator.selectAndApplyEnvParams();
-    //
+    const configurator = new TestConfigurator();
+    configurator.selectAndApplyEnvParams();
+
     // expect(configurator.parameters().number).toEqual(process.env.NUMBER);
     // expect(configurator.parameters('test.test2.test3')).toEqual(process.env.TEST_TEST2_TEST3);
     // expect(configurator.parameters('test.test2.test4')).toEqual(process.env.TEST_TEST2_TEST4);

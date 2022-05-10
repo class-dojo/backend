@@ -11,7 +11,7 @@ export default class ImageModel extends BaseModel {
   constructor (s3Client: S3Connection, configurator: Configurator) {
     super();
     this.s3 = s3Client.getClient();
-    this.bucketName = configurator.parameters('s3.imageBucketName') as string;
+    // this.bucketName = configurator.parameters('s3.imageBucketName') as string;
   }
 
   getImagesById (ids: string[]): string[] {
