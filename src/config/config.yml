@@ -1,4 +1,13 @@
 parameters:
   s3:
-    imageBucketName: ''
-    endpoint: ''
+    imageBucketName: 'this-bucket-does-not-exist'
+    endpoint: 'http://you-forgot-to-add-s3-endpoint'
+    region: 'eu-west-1'
+
+  rekognition:
+    endpoint: 'http://you-forgot-to-add-rekognition-endpoint'
+    region: 'eu-west-1'
+
+  aws:
+    accessKeyId: ''
+    secretAccessKey: ''

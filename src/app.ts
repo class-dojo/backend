@@ -2,6 +2,8 @@ import express, {Express} from 'express';
 import {ContainerBuilder, YamlFileLoader} from 'node-dependency-injection';
 import {join} from 'path';
 import Router from './Router';
+import Configurator from './components/Configurator';
+import RekognitionConnectionLocal from './components/RekognitionConnectionLocal';
 
 
 const srcDir = join(__dirname);
@@ -12,11 +14,19 @@ loader.load(__dirname + '/config/services.yml');
 
 container.compile();
 
+const configurator = container.get('configurator') as Configurator;
+const isRekognitionLocal = configurator.parameters('rekognition.isLocal');
+
+// todo should be a factory https://github.com/zazoomauro/node-dependency-injection/wiki/Factory
+if (isRekognitionLocal) {
+  container.set('rekognitionConnection', new RekognitionConnectionLocal(configurator));
+}
+
 const router: Router = new Router(container);
 
 const app: Express = express();
 
 app.use(express.json()); // json body parser
 app.use('/', router.getRestRouter());
-//
+
 export default app;

@@ -3,7 +3,6 @@ import {Router as ExpressRouter} from 'express';
 
 const controllers = [
   'healthCheckController',
-  'testController',
   'analyzeController'
 ];
 

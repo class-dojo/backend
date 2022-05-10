@@ -11,14 +11,41 @@ services:
   version:
     class: 'components/Version'
 
+  s3Connection:
+    class: 'components/S3Connection'
+    arguments:
+      - '@configurator'
+
+  rekognitionConnection:
+    class: 'components/RekognitionConnection'
+    arguments:
+      - '@configurator'
+
+
   # Controllers
   healthCheckController:
     class: 'controllers/HealthCheckController'
     arguments:
       - '@version'
 
-  testController:
-    class: 'controllers/TestController'
-
   analyzeController:
     class: 'controllers/AnalyzeController'
+    arguments:
+      - '@imageModel'
+      - '@sentimentModel'
+
+  # Models
+  imageModel:
+    class: 'models/ImageModel'
+    arguments:
+      - '@s3Connection'
+
+  rekognitionModel:
+    class: 'models/RekognitionModel'
+    arguments:
+      - '@rekognitionConnection'
+
+  sentimentModel:
+    class: 'models/SentimentModel'
+    arguments:
+      - '@rekognitionModel'
