@@ -22,12 +22,15 @@ describe('Configurator', () => {
   }
 
   test('should set environment variables', () => {
-    const configurator = new TestConfigurator();
+    const configurator = new TestConfigurator('/../../tests/components/testConfig.yml');
     configurator.selectAndApplyEnvParams();
 
-    // expect(configurator.parameters().number).toEqual(process.env.NUMBER);
-    // expect(configurator.parameters('test.test2.test3')).toEqual(process.env.TEST_TEST2_TEST3);
-    // expect(configurator.parameters('test.test2.test4')).toEqual(process.env.TEST_TEST2_TEST4);
-    // expect(configurator.parameters('test.test2.enabled')).toStrictEqual(true);
+
+    expect(configurator.parameters().number).toEqual(process.env.NUMBER);
+    expect(configurator.parameters('test.test2.test3')).toEqual(process.env.TEST_TEST2_TEST3);
+    expect(configurator.parameters('test.test2.test3')).toStrictEqual('test value 3');
+    expect(configurator.parameters('test.test2.test4')).toEqual(process.env.TEST_TEST2_TEST4);
+    expect(configurator.parameters('test.test2.test4')).toStrictEqual('test value 4');
+    expect(configurator.parameters('test.test2.enabled')).toStrictEqual(true);
   });
 });

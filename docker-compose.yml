@@ -3,11 +3,11 @@ services:
   backend:
     image: "node:14-bullseye"
     environment:
-      PORT: 5000
-      S3_IMAGES_BUCKET: images
+      S3_BUCKETNAME: images
       S3_ENDPOINT: http://s3:9000
-      AWS_ACCESS_KEY_ID: root
-      AWS_SECRET_ACCESS_KEY: toor1234
+      AWS_ACCESS_KEY_ID: root # AKIAQ3BCCU7BW3JADYCO
+      AWS_SECRET_ACCESS_KEY: toor1234 # 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
+      ENV: dev
     working_dir: /backend
     volumes:
       - .:/backend

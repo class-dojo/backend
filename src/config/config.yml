@@ -1,6 +1,6 @@
 parameters:
   s3:
-    imageBucketName: 'this-bucket-does-not-exist'
+    bucketName: 'this-bucket-does-not-exist'
     endpoint: 'http://you-forgot-to-add-s3-endpoint'
     region: 'eu-west-1'
 
@@ -11,3 +11,5 @@ parameters:
   aws:
     accessKeyId: ''
     secretAccessKey: ''
+
+  env: 'define-environment-dev-or-prod'
