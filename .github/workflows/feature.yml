@@ -31,8 +31,3 @@ jobs:
           docker-compose up -d
           docker-compose run backend make -C production/ package qa
           docker-compose down
-
-      - name: Adding some cool content
-        run: |
-          echo '### I am a pipeline!' >> $GITHUB_STEP_SUMMARY
-          echo ${GITHUB_REF##*/} >> $GITHUB_STEP_SUMMARY
