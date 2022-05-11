@@ -7,8 +7,8 @@ export default class RekognitionConnection extends BaseRekognitionConnection {
 
   constructor (configurator: Configurator) {
     super();
-    const { accessKeyId, secretAccessKey, session } = configurator.parameters('aws') as Record<string, string>;
-    const { region, endpoint } = configurator.parameters('rekognition') as Record<string, string>;
+    const { accessKeyId, secretAccessKey, session } = configurator.parameters('parameters.aws') as Record<string, string>;
+    const { region, endpoint } = configurator.parameters('parameters.rekognition') as Record<string, string>;
     this.rekognition = new Rekognition({
       region,
       endpoint,
