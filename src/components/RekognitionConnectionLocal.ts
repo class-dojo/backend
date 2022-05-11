@@ -1,7 +1,7 @@
 import Configurator from './Configurator';
 import {Rekognition} from 'aws-sdk';
 import BaseRekognitionConnection from './BaseRekognitionConnection';
-import * as mockResponse from '../../tests/mockResponses/mockResponse1.json';
+import * as mockResponse1 from '../../tests/mockResponses/mockResponse1.json';
 import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionConnectionLocal extends BaseRekognitionConnection {
@@ -14,7 +14,14 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
   getClient (): Rekognition {
     return {
       detectFaces: (image) => {
-        return mockResponse as DetectFacesResponse;
+        const allMocks = {
+          mockResponse1,
+        };
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const response = allMocks[filename].default;
+        return response as DetectFacesResponse;
       }
     } as Rekognition;
   }

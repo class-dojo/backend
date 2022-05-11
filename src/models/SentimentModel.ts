@@ -33,12 +33,12 @@ export default class SentimentModel extends BaseModel {
   }
 
   async analyzeImages (images: string[]) {
-    let moodPeak = 0;
-    let moodValley = 0;
-    let attentionPeak = 0;
-    let attentionValley = 0;
-    let peoplePeak = 0;
-    let peopleValley = 0;
+    let moodPeak;
+    let moodValley;
+    let attentionPeak;
+    let attentionValley;
+    let peoplePeak;
+    let peopleValley;
     const framesArray: IFrameInfo[]  = [];
     for (const image of images) {
       const data = await this.feedImageToAWSReckon(image); //needs to be parsed in production probably
@@ -46,22 +46,22 @@ export default class SentimentModel extends BaseModel {
       framesArray.push(frameInfo);
 
       // getting max and min values while in the loop
-      if (frameInfo.amountOfPeople > peoplePeak) {
+      if (!peoplePeak || frameInfo.amountOfPeople > peoplePeak) {
         peoplePeak = frameInfo.amountOfPeople;
       }
-      if (frameInfo.amountOfPeople < peopleValley) {
+      if (!peopleValley || frameInfo.amountOfPeople < peopleValley) {
         peopleValley = frameInfo.amountOfPeople;
       }
-      if (frameInfo.attentionScore > attentionPeak) {
+      if (!attentionPeak || frameInfo.attentionScore > attentionPeak) {
         attentionPeak = frameInfo.attentionScore;
       }
-      if (frameInfo.attentionScore < attentionValley) {
+      if (!attentionValley || frameInfo.attentionScore < attentionValley) {
         attentionValley = frameInfo.attentionScore;
       }
-      if (frameInfo.moodScore > moodPeak) {
+      if (!moodPeak || frameInfo.moodScore > moodPeak) {
         moodPeak = frameInfo.moodScore;
       }
-      if (frameInfo.moodScore < moodValley) {
+      if (!moodValley || frameInfo.moodScore < moodValley) {
         moodValley = frameInfo.moodScore;
       }
     }
