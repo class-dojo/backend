@@ -13,10 +13,10 @@ export default class ImageModel extends BaseModel {
 
   checkIfImagesExist (idsToCheck: string[]): Promise<boolean> {
     return this.s3Model.listAllFiles(this.bucketName)
-      .then((data) => this.imagesExist(idsToCheck, data));
+      .then((data) => ImageModel.imagesExist(idsToCheck, data));
   }
 
-  private imagesExist (idsToCheck: string[], allFiles: ObjectList): boolean {
+  private static imagesExist (idsToCheck: string[], allFiles: ObjectList): boolean {
     const allKeys = [];
     for (const file of allFiles) {
       if (idsToCheck.includes(file.Key)) {
@@ -27,10 +27,6 @@ export default class ImageModel extends BaseModel {
     return allKeys.length === idsToCheck.length;
   }
 
-  getPresignedPutLink (filename: string): string {
-    // this.s3.getSignedUrl();
-    return 'hello';
-  }
 
   storeFinalResults () {
     return;

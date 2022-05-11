@@ -64,4 +64,5 @@ services:
   s3LinkModel:
     class: 'models/S3LinkModel'
     arguments:
-      - '@s3Connection'
+      - '@s3Model'
+      - '@configurator'

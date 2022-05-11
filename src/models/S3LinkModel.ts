@@ -1,16 +1,22 @@
 import BaseModel from './BaseModel';
-import S3Connection from '../components/S3Connection';
-import { S3 } from 'aws-sdk';
+import S3Model from './S3Model';
+import Configurator from '../components/Configurator';
 
 export default class S3LinkModel extends BaseModel {
-  private s3Connection: S3;
-  constructor (s3Connection: S3Connection) {
+  bucketName: string;
+  constructor (private readonly s3Model: S3Model, configurator: Configurator) {
     super();
-    this.s3Connection = s3Connection.getClient();
+    this.bucketName = configurator.parameters('parameters.s3.bucketName');
   }
 
-  getLinks (images : string[]) {
-    return {links: ['link1, link2']};
+  getPresignedPutLink (filenames: string[]): Record<string, string> {
+    const allPresignedLinks: Record<string, string> = {};
+
+    for (const filename of filenames) {
+      allPresignedLinks[filename] = this.s3Model.presignedPutLink(this.bucketName, filename);
+    }
+
+    return allPresignedLinks;
   }
 
 }

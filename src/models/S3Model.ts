@@ -1,6 +1,5 @@
 import BaseModel from './BaseModel';
 import S3Connection from '../components/S3Connection';
-import Configurator from '../components/Configurator';
 import {S3} from 'aws-sdk';
 import {GetObjectRequest, ObjectList, PutObjectOutput, PutObjectRequest} from 'aws-sdk/clients/s3';
 
@@ -36,5 +35,13 @@ export default class S3Model extends BaseModel {
       Prefix: folder,
     }).promise();
     return response.Contents;
+  }
+
+  presignedPutLink (bucket: string, filename: string): string {
+    return this.s3.getSignedUrl('putObject', {
+      Bucket: bucket,
+      Key: filename,
+      Expires: 604800
+    });
   }
 }
