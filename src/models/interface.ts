@@ -7,8 +7,8 @@ export interface IFaceDetails {
  }
 
 export interface IEmotion {
-     Type: string,
-     Confidence: number
+     Type?: string,
+     Confidence?: number
  }
 
 export interface IFrameInfo {

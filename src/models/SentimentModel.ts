@@ -1,14 +1,15 @@
 import BaseModel from './BaseModel';
 import RekognitionModel from './RekognitionModel';
-import {AmountOfPeople, calculateAttentionScore, calculateMoodScore, removeUselessProps} from '../models/helpers';
-import { IFaceDetails, IFrameInfo } from './interface';
+import {AmountOfPeople, calculateAttentionScore, calculateMoodScore, removeUselessProps} from './helpers';
+import {IFaceDetails, IFrameInfo} from './interface';
+import {DetectFacesResponse, FaceDetailList} from 'aws-sdk/clients/rekognition';
 
 export default class SentimentModel extends BaseModel {
   constructor (private readonly rekognitionModel: RekognitionModel) {
     super();
   }
 
-  manipulateData (facesArray : IFaceDetails[]) {
+  manipulateData (facesArray : FaceDetailList) {
     let moodScore = 0;
     let attentionScore = 0;
     for (let face of facesArray) {
@@ -19,16 +20,16 @@ export default class SentimentModel extends BaseModel {
     const amountOfPeople = AmountOfPeople(facesArray);
     moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
     attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
-    const result = {
+    return {
       attentionScore,
       moodScore,
       amountOfPeople
     };
-    return result;}
+  }
 
   async feedImageToAWSReckon (image : string) {
     const response = await this.rekognitionModel.detectFaces(image);
-    return response;
+    return response as DetectFacesResponse;
   }
 
   async analyzeImages (images: string[]) {
@@ -43,6 +44,8 @@ export default class SentimentModel extends BaseModel {
       const data = await this.feedImageToAWSReckon(image); //needs to be parsed in production probably
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
+
+      // getting max and min values while in the loop
       if (frameInfo.amountOfPeople > peoplePeak) {
         peoplePeak = frameInfo.amountOfPeople;
       }
@@ -62,7 +65,7 @@ export default class SentimentModel extends BaseModel {
         moodValley = frameInfo.moodScore;
       }
     }
-    const result = {
+    return {
       framesArray,
       peaks: {
         moodPeak,
@@ -74,12 +77,16 @@ export default class SentimentModel extends BaseModel {
         attentionValley,
         peopleValley,
       },
-      averages : {
-        moodAverage: parseFloat(((moodPeak + moodValley)/2).toFixed(2)),
-        attentionAverage: parseFloat(((attentionPeak + attentionValley)/2).toFixed(2)),
-        peopleAverage: parseFloat(((peoplePeak + peopleValley)/2).toFixed(2)),
+      averages: {
+        // todo fix to weighted
+        moodAverage: parseFloat(((moodPeak + moodValley) / 2).toFixed(2)),
+        attentionAverage: parseFloat(((attentionPeak + attentionValley) / 2).toFixed(2)),
+        peopleAverage: parseFloat(((peoplePeak + peopleValley) / 2).toFixed(2)),
       }
     };
-    return result;
+  }
+
+  private removeUselessProps (face: IFaceDetails) {
+    return 1;
   }
 }

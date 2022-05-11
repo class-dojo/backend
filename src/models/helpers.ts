@@ -1,7 +1,8 @@
 import { IFaceDetails } from './interface';
+import {FaceDetail, FaceDetailList} from 'aws-sdk/clients/rekognition';
 
 
-export function removeUselessProps (faceDetails : IFaceDetails) {
+export function removeUselessProps (faceDetails : FaceDetail) {
   const cleanFaceDetails : IFaceDetails = {
     Emotions: [],
   };
@@ -11,7 +12,7 @@ export function removeUselessProps (faceDetails : IFaceDetails) {
   return cleanFaceDetails;
 }
 
-export function calculateMoodScore (faceDetails : IFaceDetails) {
+export function calculateMoodScore (faceDetails : FaceDetail) {
   let moodScore  = 0;
   const confidence = parseFloat(faceDetails.Emotions[0].Confidence.toFixed(2));
   switch (faceDetails.Emotions[0].Type) {
@@ -37,11 +38,11 @@ export function calculateMoodScore (faceDetails : IFaceDetails) {
   return parseFloat(moodScore.toFixed(2));
 }
 
-export function AmountOfPeople (facesAnalysisArr : IFaceDetails[]) {
+export function AmountOfPeople (facesAnalysisArr : FaceDetailList) {
   return facesAnalysisArr.length;
 }
 
-export function calculateAttentionScore (faceDetails : IFaceDetails) {
+export function calculateAttentionScore (faceDetails : FaceDetail) {
   let attentionScore = 0;
   for (const emotion of faceDetails.Emotions) {
     switch (emotion.Type) {

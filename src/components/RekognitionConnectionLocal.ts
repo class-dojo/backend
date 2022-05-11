@@ -1,6 +1,8 @@
 import Configurator from './Configurator';
-import {Credentials, Rekognition} from 'aws-sdk';
+import {Rekognition} from 'aws-sdk';
 import BaseRekognitionConnection from './BaseRekognitionConnection';
+import * as mockResponse from '../../tests/mockResponses/mockResponse1.json';
+import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionConnectionLocal extends BaseRekognitionConnection {
   private readonly rekognition: Rekognition;
@@ -11,8 +13,8 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
 
   getClient (): Rekognition {
     return {
-      detectFaces: () => {
-        return;
+      detectFaces: (image) => {
+        return mockResponse as DetectFacesResponse;
       }
     } as Rekognition;
   }
