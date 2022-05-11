@@ -12,6 +12,7 @@ export default class SentimentModel extends BaseModel {
   manipulateData (facesArray : FaceDetailList) {
     let moodScore = 0;
     let attentionScore = 0;
+
     for (let face of facesArray) {
       face = removeUselessProps(face);
       moodScore += calculateMoodScore(face);
@@ -20,6 +21,7 @@ export default class SentimentModel extends BaseModel {
     const amountOfPeople = AmountOfPeople(facesArray);
     moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
     attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
+
     return {
       attentionScore,
       moodScore,
@@ -65,7 +67,8 @@ export default class SentimentModel extends BaseModel {
         moodValley = frameInfo.moodScore;
       }
     }
-    return {
+
+    const response = {
       framesArray,
       peaks: {
         moodPeak,
@@ -84,6 +87,10 @@ export default class SentimentModel extends BaseModel {
         peopleAverage: parseFloat(((peoplePeak + peopleValley) / 2).toFixed(2)),
       }
     };
+
+    // todo determineImportance based on average from the calculated frames rather than use arbitrary threshold
+
+    return response;
   }
 
   private removeUselessProps (face: IFaceDetails) {

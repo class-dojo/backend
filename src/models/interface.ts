@@ -14,5 +14,6 @@ export interface IEmotion {
 export interface IFrameInfo {
   amountOfPeople : number,
   attentionScore: number,
-  moodScore: number
+  moodScore: number,
+  isImportant? : boolean,
 }
