@@ -9,7 +9,7 @@ export default class S3LinkModel extends BaseModel {
     this.bucketName = configurator.parameters('parameters.s3.bucketName');
   }
 
-  getPresignedPutLink (filenames: string[]): Record<string, string> {
+  getLinks (filenames: string[]): Record<string, string> {
     const allPresignedLinks: Record<string, string> = {};
 
     for (const filename of filenames) {
