@@ -1,37 +1,10 @@
 import {describe, test} from '@jest/globals';
 import ImageModel from '../../src/models/ImageModel';
 import {containerBuilder} from '../testContainer';
-import S3Connection from '../../src/components/S3Connection';
 import Configurator from '../../src/components/Configurator';
 import S3Model from '../../src/models/S3Model';
 
 describe('ImageModel', () => {
-
-  const s3ListAllResponse = [
-    {
-      Key: 'verycoolcall/image.jpg',
-      LastModified: '2022-05-10T17:51:22.728Z',
-      ETag: '"e479b5af68201d819b596c44829941bb"',
-      ChecksumAlgorithm: [] as any[],
-      Size: 1674447,
-      StorageClass: 'STANDARD',
-      Owner: {
-        DisplayName: 'minio',
-        ID: '02d6176db174dc93cb1b899f7c6078f08654445fe8cf1b6ce98d8855f66bdbf4'
-      }
-    },
-    {
-      Key: 'verycoolcall/image2.jpg',
-      LastModified:'2022-05-10T17:51:22.648Z',
-      ETag: '"cbb9a6f92832938b2bcc858ea1fd2c43"',
-      ChecksumAlgorithm: [],
-      Size: 1604152,
-      StorageClass: 'STANDARD',
-      Owner: {
-        DisplayName: 'minio',
-        ID: '02d6176db174dc93cb1b899f7c6078f08654445fe8cf1b6ce98d8855f66bdbf4'
-      }
-    }];
 
   test('should get list of all existing images', async () => {
     const container = containerBuilder();
