@@ -34,6 +34,11 @@ services:
       - '@imageModel'
       - '@sentimentModel'
 
+  s3LinkController:
+    class: 'controllers/S3LinkController'
+    arguments:
+      - '@s3LinkModel'
+
   # Models
   imageModel:
     class: 'models/ImageModel'
@@ -49,3 +54,8 @@ services:
     class: 'models/SentimentModel'
     arguments:
       - '@rekognitionModel'
+
+  s3LinkModel:
+    class: 'models/S3LinkModel'
+    arguments:
+      - '@s3Connection'
