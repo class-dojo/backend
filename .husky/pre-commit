@@ -2,5 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 sh .husky/custom/block-master.sh
-npm test
 npx lint-staged
