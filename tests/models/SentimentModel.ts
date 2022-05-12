@@ -18,10 +18,8 @@ describe('Sentiment model', () => {
 
   test('should display correct final results', async () => {
 
-    const finalResults = await sentimentModel.analyzeImages(['image.jpg','image2.jpg']);
+    const finalResults = await sentimentModel.analyzeImages([{Key: 'image.jpg'},{Key: 'image2.jpg'}]);
     // check frame array
-    console.log(finalResults);
-
     expect(finalResults.framesArray).toHaveLength(2);
 
     // check for peaks and valleys

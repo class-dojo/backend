@@ -14,7 +14,7 @@ export default class RekognitionModel extends BaseModel {
     const params = {
       Image: {
         S3Object: {
-          Bucket: 'images',
+          Bucket: 'images', //TODO remove hard coded bucket
           Name: image
         },
       },

@@ -30,8 +30,10 @@ export default class SentimentModel extends BaseModel {
     };
   }
 
-  async feedImageToAWSReckon (image : string) {
+  async feedImageToAWSReckon (image : string) { //image1.png
     const response = await this.rekognitionModel.detectFaces(image);
+    console.log('response ->',response);
+
     return response as DetectFacesResponse;
   }
 

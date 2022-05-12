@@ -25,8 +25,12 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const response = allMocks[params.Image.S3Object.Name].default;
+        const imgName : string[] = params.Image.S3Object.Name.split('/');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const response = allMocks[imgName[imgName.length - 1]].default; //testvideo/image1.jpg
         return response as DetectFacesResponse;
+
       }
     } as Rekognition;
   }
