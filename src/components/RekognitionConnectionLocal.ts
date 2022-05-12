@@ -1,10 +1,10 @@
 import Configurator from './Configurator';
 import {Rekognition} from 'aws-sdk';
 import BaseRekognitionConnection from './BaseRekognitionConnection';
-import * as mockResponse1 from '../../tests/mockResponses/mockResponse1.json';
-import * as mockResponse2 from '../../tests/mockResponses/mockResponse2.json';
-import * as mockResponse3 from '../../tests/mockResponses/mockResponse3.json';
-import * as mockResponse4 from '../../tests/mockResponses/mockResponse4.json';
+import * as mockResponse1 from '../mockResponses/mockResponse1.json';
+import * as mockResponse2 from '../mockResponses/mockResponse2.json';
+import * as mockResponse3 from '../mockResponses/mockResponse3.json';
+import * as mockResponse4 from '../mockResponses/mockResponse4.json';
 import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionConnectionLocal extends BaseRekognitionConnection {
