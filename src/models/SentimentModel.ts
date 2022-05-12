@@ -41,12 +41,20 @@ export default class SentimentModel extends BaseModel {
     let attentionValley;
     let peoplePeak;
     let peopleValley;
+    const isImportantTreshold = 0.3;
+    const sums = {
+      attention: 0,
+      mood: 0,
+      people: 0
+    };
     const framesArray: IFrameInfo[]  = [];
     for (const image of images) {
       const data = await this.feedImageToAWSReckon(image); //needs to be parsed in production probably
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
-
+      sums.attention += frameInfo.attentionScore;
+      sums.mood += frameInfo.moodScore;
+      sums.people += frameInfo.amountOfPeople;
       // getting max and min values while in the loop
       if (!peoplePeak || frameInfo.amountOfPeople > peoplePeak) {
         peoplePeak = frameInfo.amountOfPeople;
@@ -68,6 +76,17 @@ export default class SentimentModel extends BaseModel {
       }
     }
 
+    const averages = {
+      moodAverage: parseFloat((sums.mood / framesArray.length).toFixed(2)),
+      attentionAverage: parseFloat((sums.attention  / framesArray.length).toFixed(2)),
+      peopleAverage: parseFloat((sums.people  / framesArray.length).toFixed(2)),
+    };
+    //calculating importance based on averages
+    for (const frame of framesArray) {
+      frame.isImportantAttention = this.calculateImportance(frame.attentionScore, averages.attentionAverage, isImportantTreshold);
+      frame.isImportantMood = this.calculateImportance(frame.moodScore, averages.moodAverage, isImportantTreshold);
+      frame.isImportantPeople = this.calculateImportance(frame.amountOfPeople, averages.peopleAverage, isImportantTreshold);
+    }
     const response = {
       framesArray,
       peaks: {
@@ -80,16 +99,8 @@ export default class SentimentModel extends BaseModel {
         attentionValley,
         peopleValley,
       },
-      averages: {
-        // todo fix to weighted
-        moodAverage: parseFloat(((moodPeak + moodValley) / 2).toFixed(2)),
-        attentionAverage: parseFloat(((attentionPeak + attentionValley) / 2).toFixed(2)),
-        peopleAverage: parseFloat(((peoplePeak + peopleValley) / 2).toFixed(2)),
-      }
+      averages
     };
-
-    // todo determineImportance based on average from the calculated frames rather than use arbitrary threshold
-
     return response;
   }
 
@@ -161,5 +172,8 @@ export default class SentimentModel extends BaseModel {
   }
   private AmountOfPeople (facesAnalysisArr : FaceDetailList) {
     return facesAnalysisArr.length;
+  }
+  private calculateImportance (score : number, average : number, threshold : number) {
+    return score >= (average + (average * threshold)) || score <= (average - (average * threshold));
   }
 }

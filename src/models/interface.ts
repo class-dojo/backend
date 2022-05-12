@@ -15,5 +15,7 @@ export interface IFrameInfo {
   amountOfPeople : number,
   attentionScore: number,
   moodScore: number,
-  isImportant? : boolean,
+  isImportantPeople? : boolean,
+  isImportantAttention? : boolean,
+  isImportantMood? : boolean,
 }
