@@ -6,6 +6,12 @@ import Configurator from './components/Configurator';
 import RekognitionConnectionLocal from './components/RekognitionConnectionLocal';
 
 
+// TODO: https://github.com/serverless/serverless-plugin-typescript/issues/188
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import HealthCheckController from './controllers/HealthCheckController';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Version from './components/Version';
+
 const srcDir = join(__dirname);
 const container = new ContainerBuilder(true, srcDir);
 
