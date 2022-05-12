@@ -1,8 +1,8 @@
 import BaseModel from './BaseModel';
 import RekognitionModel from './RekognitionModel';
-import {AmountOfPeople, calculateAttentionScore, calculateMoodScore, removeUselessProps} from './helpers';
 import {IFaceDetails, IFrameInfo} from './interface';
-import {DetectFacesResponse, FaceDetailList} from 'aws-sdk/clients/rekognition';
+import {DetectFacesResponse, FaceDetailList, FaceDetail} from 'aws-sdk/clients/rekognition';
+
 
 export default class SentimentModel extends BaseModel {
   constructor (private readonly rekognitionModel: RekognitionModel) {
@@ -14,11 +14,11 @@ export default class SentimentModel extends BaseModel {
     let attentionScore = 0;
 
     for (let face of facesArray) {
-      face = removeUselessProps(face);
-      moodScore += calculateMoodScore(face);
-      attentionScore = calculateAttentionScore(face);
+      face = this.removeUselessProps(face);
+      moodScore += this.calculateMoodScore(face);
+      attentionScore = this.calculateAttentionScore(face);
     }
-    const amountOfPeople = AmountOfPeople(facesArray);
+    const amountOfPeople = this.AmountOfPeople(facesArray);
     moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
     attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
 
@@ -93,7 +93,73 @@ export default class SentimentModel extends BaseModel {
     return response;
   }
 
-  private removeUselessProps (face: IFaceDetails) {
-    return 1;
+  private removeUselessProps (faceDetails : FaceDetail) {
+    const cleanFaceDetails : IFaceDetails = {
+      Emotions: [],
+    };
+    for (const key in cleanFaceDetails) {
+      cleanFaceDetails[key as keyof IFaceDetails] = faceDetails[key as keyof IFaceDetails];
+    }
+    return cleanFaceDetails;
+  }
+  private calculateMoodScore (faceDetails : FaceDetail) {
+    let moodScore  = 0;
+    const confidence = parseFloat(faceDetails.Emotions[0].Confidence.toFixed(2));
+    switch (faceDetails.Emotions[0].Type) {
+    case 'CONFUSED':
+      moodScore -= 2 / 100 * confidence;
+      break;
+    case 'SURPRISED':
+      moodScore += 2 / 100 * confidence;
+      break;
+    case 'HAPPY':
+      moodScore += 3 / 100 * confidence;
+      break;
+    case 'DISGUSTED':
+      moodScore -= 2 / 100 * confidence;
+      break;
+    case 'ANGRY':
+      moodScore -= 2 / 100 * confidence;
+      break;
+    case 'SAD':
+      moodScore -= 3 / 100 * confidence;
+      break;
+    }
+    return parseFloat(moodScore.toFixed(2));
+  }
+  private calculateAttentionScore (faceDetails : FaceDetail) {
+    let attentionScore = 0;
+    for (const emotion of faceDetails.Emotions) {
+      switch (emotion.Type) {
+      case 'CONFUSED':
+        attentionScore += 0.1 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'SURPRISED':
+        attentionScore += 0.6 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'HAPPY':
+        attentionScore += 0.6 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'DISGUSTED':
+        attentionScore += 0.1 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'ANGRY':
+        attentionScore += 0.25 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'SAD':
+        attentionScore += 0.3 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'FEAR':
+        attentionScore += 0.3 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      case 'CALM':
+        attentionScore += 0.9 / 100 * parseFloat(emotion.Confidence.toFixed(2));
+        break;
+      }
+      return parseFloat(attentionScore.toFixed(2));
+    }
+  }
+  private AmountOfPeople (facesAnalysisArr : FaceDetailList) {
+    return facesAnalysisArr.length;
   }
 }

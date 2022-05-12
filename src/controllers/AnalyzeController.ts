@@ -37,3 +37,5 @@ export default class AnalyzeController extends BaseController {
     response.status(200).json(result);
   }
 }
+
+
