@@ -6,7 +6,7 @@ on:
     tags:
       - v*
 jobs:
-  qa:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
