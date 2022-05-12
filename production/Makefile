@@ -47,7 +47,7 @@ app: npm
 package: app
 	@(printf "${BG}Creating package${NC}")
 		cd $(build) && npx serverless package --package ../release
-		cd $(build) && zip -ur ../$(target)/$(project).zip src/config version.txt
+		cd $(build) && zip -ur ../$(release)/classdojo-backend.zip src/config version.txt
 
 	@(printf "${BG}Package version $(version) is ready${NC}")
 		echo $(version) >$(release)/latest.version
