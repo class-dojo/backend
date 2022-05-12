@@ -39,6 +39,7 @@ app: npm
 		cp -r $(root_project)/src/* $(build)/src/
 		cp -r $(root_project)/node_modules $(build)/
 		cp $(root_project)/lambda.ts $(build)/
+		cp $(root_project)/tsconfig.json $(build)/
 		cp $(root_project)/package.json $(build)/
 		cp $(root_project)/package-lock.json $(build)/
 		cp $(root_project)/serverless.yml $(build)/
