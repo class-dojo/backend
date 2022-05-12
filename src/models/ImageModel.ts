@@ -19,8 +19,9 @@ export default class ImageModel extends BaseModel {
 
   }
 
-  storeFinalResults (dataAfterMagic : IFinalResponse) {
+  async storeFinalResults (dataAfterMagic : IFinalResponse, videoUid : string) {
     //upload dataAfterMagic.stringify to s3
+    await this.s3Model.put(this.bucketName, videoUid ,dataAfterMagic);
     return;
   }
 }

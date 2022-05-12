@@ -27,7 +27,7 @@ export default class AnalyzeController extends BaseController {
       const dataAfterMagic = await this.sentimentModel.analyzeImages(imagesToAnalyze);
       // save it to json and to a bucket - ImageModel
       // send the output back to FE
-      await this.imageModel.storeFinalResults(dataAfterMagic);
+      await this.imageModel.storeFinalResults(dataAfterMagic, request.body.videoUid);
       const result = {
         status: dataAfterMagic,
       };
