@@ -20,6 +20,9 @@ import S3Connection from './components/S3Connection';
 import HealthCheckController from './controllers/HealthCheckController';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AnalyzeController from './controllers/AnalyzeController';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3LinkController from './controllers/S3LinkController';
+
 
 // models
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,6 +33,10 @@ import ImageModel from './models/ImageModel';
 import RekognitionModel from './models/RekognitionModel';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SentimentModel from './models/SentimentModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3LinkModel from './models/S3LinkModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3Model from './models/S3Model';
 
 
 const srcDir = join(__dirname);
