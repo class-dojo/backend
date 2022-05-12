@@ -3,7 +3,7 @@ export interface IRecognitionResponse {
  }
 
 export interface IFaceDetails {
-   Emotions: IEmotion[],
+   Emotions?: IEmotion[],
  }
 
 export interface IEmotion {
