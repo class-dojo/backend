@@ -10,7 +10,7 @@ export default class HealthCheckController extends BaseController {
   }
 
   register (router: Router): void {
-    router.route('/v1/health-check').get((request: Request, response: Response) => {
+    router.route('/health-check').get((request: Request, response: Response) => {
       return this.actionDefault(request, response);
     });
   }
