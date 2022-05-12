@@ -16,7 +16,7 @@ export default class SentimentModel extends BaseModel {
     for (let face of facesArray) {
       face = this.removeUselessProps(face);
       moodScore += this.calculateMoodScore(face);
-      attentionScore = this.calculateAttentionScore(face);
+      attentionScore += this.calculateAttentionScore(face);
     }
     const amountOfPeople = this.AmountOfPeople(facesArray);
     moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
@@ -79,7 +79,7 @@ export default class SentimentModel extends BaseModel {
     const averages = {
       moodAverage: parseFloat((sums.mood / framesArray.length).toFixed(2)),
       attentionAverage: parseFloat((sums.attention  / framesArray.length).toFixed(2)),
-      peopleAverage: parseFloat((sums.people  / framesArray.length).toFixed(2)),
+      peopleAverage: Math.floor( sums.people / framesArray.length )
     };
     //calculating importance based on averages
     for (const frame of framesArray) {
@@ -118,22 +118,28 @@ export default class SentimentModel extends BaseModel {
     const confidence = parseFloat(faceDetails.Emotions[0].Confidence.toFixed(2));
     switch (faceDetails.Emotions[0].Type) {
     case 'CONFUSED':
-      moodScore -= 2 / 100 * confidence;
+      moodScore += 0.2 / 100 * confidence;
       break;
     case 'SURPRISED':
-      moodScore += 2 / 100 * confidence;
+      moodScore += 0.8 / 100 * confidence;
       break;
     case 'HAPPY':
-      moodScore += 3 / 100 * confidence;
+      moodScore += 0.9 / 100 * confidence;
+      break;
+    case 'CALM':
+      moodScore += 0.5 / 100 * confidence;
+      break;
+    case 'FEAR':
+      moodScore += 0.5 / 100 * confidence;
       break;
     case 'DISGUSTED':
-      moodScore -= 2 / 100 * confidence;
+      moodScore += 0.2 / 100 * confidence;
       break;
     case 'ANGRY':
-      moodScore -= 2 / 100 * confidence;
+      moodScore += 0.2 / 100 * confidence;
       break;
     case 'SAD':
-      moodScore -= 3 / 100 * confidence;
+      moodScore += 0.1 / 100 * confidence;
       break;
     }
     return parseFloat(moodScore.toFixed(2));
