@@ -11,9 +11,11 @@ export default class ImageModel extends BaseModel {
     this.bucketName = configurator.parameters('parameters.s3.bucketName') as string;
   }
 
-  checkIfImagesExist (idsToCheck: string[]): Promise<boolean> {
-    return this.s3Model.listAllFiles(this.bucketName)
-      .then((data) => ImageModel.imagesExist(idsToCheck, data));
+  async fetchImagesNames (videoUid: string): Promise<ObjectList> {
+    const imagesIds =  await this.s3Model.listAllFiles(this.bucketName, videoUid);
+    console.log(imagesIds);
+    return imagesIds;
+
   }
 
   private static imagesExist (idsToCheck: string[], allFiles: ObjectList): boolean {

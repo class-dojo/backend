@@ -19,23 +19,24 @@ export default class AnalyzeController extends BaseController {
   }
 
   async actionDefault (request: Request, response: Response): Promise<void> {
-    await this.imageModel.checkIfImagesExist(['verycoolcall/image']);
-    // get image ids from request
-    const imagesArray = ['image.jpg'];
-    // check that images exist on S3 bucket - bulk - ImageModel
-    // send them to aws rekognition for analysis - SentimentModel
-    // make transformation magic on the output - SentimentModel
-    await this.sentimentModel.analyzeImages(imagesArray);
-    // save it to json and to a bucket - ImageModel
-    // send the output back to FE
-
-
-    const result = {
-      status: 'data-after-magic',
-    };
-
-    response.setHeader('Content-Type', 'application/json');
-    response.status(200).json(result);
+    try {
+      const imagesToAnalyze = await this.imageModel.fetchImagesNames(request.body.videoUid);
+      // get image ids from request
+      // check that images exist on S3 bucket - bulk - ImageModel
+      // send them to aws rekognition for analysis - SentimentModel
+      // make transformation magic on the output - SentimentModel
+      //await this.sentimentModel.analyzeImages(imagesToAnalyze);
+      // save it to json and to a bucket - ImageModel
+      // send the output back to FE
+      const result = {
+        status: 'data-after-magic',
+      };
+      response.setHeader('Content-Type', 'application/json');
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400);
+    }
   }
 }
 

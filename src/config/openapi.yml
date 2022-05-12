@@ -67,4 +67,4 @@ components:
       required:
         - images
       example:
-        images: [imageName.jpg]
+        images: [image.jpg]
