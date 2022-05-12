@@ -18,10 +18,7 @@ export default class Configurator {
   constructor (configPath = '/../config/config.yml') {
 
     console.log('who are you and what have you done to yaml', yaml);
-
     this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
-    console.log(this.config);
-
     this.selectAndApplyEnvParams();
   }
 
