@@ -58,7 +58,7 @@ qa:
 		mkdir -p $(root_project)/log
 
 	@(printf "${BG}Running tests${NC}")
-		cd $(root_project) && npm test
+		cd $(root_project) && export FORCE_COLOR=1 && npm test
 
 .PHONY: release
 release:
