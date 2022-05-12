@@ -27,11 +27,17 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Build and release
-        run: |
-          docker-compose up -d
-          docker-compose run backend make -C production/ package qa release AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          docker-compose down
+      - name: Start containers
+        run: docker-compose up -d
+
+      - name: Package and QA
+        run: docker-compose run backend make -C production/ package qa
+
+      - name: Release
+        run: docker-compose run backend make -C production/ release AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Stop containers
+        run: docker-compose down
 
       - name: Store Artifact
         uses: actions/upload-artifact@v2
