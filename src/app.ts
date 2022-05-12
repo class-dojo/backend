@@ -38,15 +38,16 @@ const container = new ContainerBuilder(true, srcDir);
 const loader = new YamlFileLoader(container);
 loader.load(__dirname + '/config/services.yml');
 
-container.compile();
-
 const configurator = container.get('configurator') as Configurator;
-const environment = configurator.parameters('env');
+const environment = configurator.parameters('parameters.env');
 
 // todo should be a factory https://github.com/zazoomauro/node-dependency-injection/wiki/Factory
-if (environment === 'dev') {
+if (environment !== 'prod') {
   container.set('rekognitionConnection', new RekognitionConnectionLocal(configurator));
 }
+
+// HAVE TO COMPILE AFTER SETTING SERVICES UP
+container.compile();
 
 const router: Router = new Router(container);
 

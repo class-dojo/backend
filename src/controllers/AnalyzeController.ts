@@ -20,11 +20,14 @@ export default class AnalyzeController extends BaseController {
 
   async actionDefault (request: Request, response: Response): Promise<void> {
     // get image ids from request
+    const imagesArray = ['image.jpg'];
     // check that images exist on S3 bucket - bulk - ImageModel
     // send them to aws rekognition for analysis - SentimentModel
     // make transformation magic on the output - SentimentModel
+    await this.sentimentModel.analyzeImages(imagesArray);
     // save it to json and to a bucket - ImageModel
     // send the output back to FE
+
 
     const result = {
       status: 'data-after-magic',
@@ -34,3 +37,5 @@ export default class AnalyzeController extends BaseController {
     response.status(200).json(result);
   }
 }
+
+

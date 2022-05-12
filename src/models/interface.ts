@@ -3,16 +3,19 @@ export interface IRecognitionResponse {
  }
 
 export interface IFaceDetails {
-   Emotions: IEmotion[],
+   Emotions?: IEmotion[],
  }
 
 export interface IEmotion {
-     Type: string,
-     Confidence: number
+     Type?: string,
+     Confidence?: number
  }
 
 export interface IFrameInfo {
   amountOfPeople : number,
   attentionScore: number,
-  moodScore: number
+  moodScore: number,
+  isImportantPeople? : boolean,
+  isImportantAttention? : boolean,
+  isImportantMood? : boolean,
 }
