@@ -7,10 +7,30 @@ import RekognitionConnectionLocal from './components/RekognitionConnectionLocal'
 
 
 // TODO: https://github.com/serverless/serverless-plugin-typescript/issues/188
+// components
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Version from './components/Version';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import RekognitionConnection from './components/RekognitionConnection';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3Connection from './components/S3Connection';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+// controllers
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import HealthCheckController from './controllers/HealthCheckController';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Version from './components/Version';
+import AnalyzeController from './controllers/AnalyzeController';
+
+// models
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import BaseModel from './models/BaseModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import ImageModel from './models/ImageModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import RekognitionModel from './models/RekognitionModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import SentimentModel from './models/SentimentModel';
 
 const srcDir = join(__dirname);
 const container = new ContainerBuilder(true, srcDir);
