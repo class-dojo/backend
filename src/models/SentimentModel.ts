@@ -1,7 +1,8 @@
 import BaseModel from './BaseModel';
 import RekognitionModel from './RekognitionModel';
-import {IFaceDetails, IFrameInfo} from './interface';
+import {IFaceDetails, IFinalResponse, IFrameInfo} from './interface';
 import {DetectFacesResponse, FaceDetailList, FaceDetail} from 'aws-sdk/clients/rekognition';
+import { ObjectList } from 'aws-sdk/clients/s3';
 
 
 export default class SentimentModel extends BaseModel {
@@ -34,7 +35,7 @@ export default class SentimentModel extends BaseModel {
     return response as DetectFacesResponse;
   }
 
-  async analyzeImages (images: string[]) {
+  async analyzeImages (images: ObjectList) {
     let moodPeak;
     let moodValley;
     let attentionPeak;
@@ -49,7 +50,7 @@ export default class SentimentModel extends BaseModel {
     };
     const framesArray: IFrameInfo[]  = [];
     for (const image of images) {
-      const data = await this.feedImageToAWSReckon(image); //needs to be parsed in production probably
+      const data = await this.feedImageToAWSReckon(image.Key); //needs to be parsed in production probably
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;
@@ -87,7 +88,7 @@ export default class SentimentModel extends BaseModel {
       frame.isImportantMood = this.calculateImportance(frame.moodScore, averages.moodAverage, isImportantTreshold);
       frame.isImportantPeople = this.calculateImportance(frame.amountOfPeople, averages.peopleAverage, isImportantTreshold);
     }
-    const response = {
+    const response : IFinalResponse = {
       framesArray,
       peaks: {
         moodPeak,

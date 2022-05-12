@@ -19,3 +19,21 @@ export interface IFrameInfo {
   isImportantAttention? : boolean,
   isImportantMood? : boolean,
 }
+export interface IFinalResponse {
+  framesArray: IFrameInfo[];
+    peaks: {
+        moodPeak: number;
+        attentionPeak: number;
+        peoplePeak: number;
+    };
+    valleys: {
+        moodValley: number;
+        attentionValley: number;
+        peopleValley: number;
+    };
+    averages: {
+      moodAverage: number;
+      attentionAverage: number;
+      peopleAverage: number;
+      }
+}
