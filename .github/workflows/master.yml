@@ -39,11 +39,11 @@ jobs:
           name: classdojo-backend # double zipping issue: https://github.com/actions/upload-artifact/issues/39
           path: production/release/classdojo-backend.zip
 
-#      - name: Deploy
-#        run: |
-#          curl \
-#          -X POST \
-#          -H "Accept: application/vnd.github.v3+json" \
-#          -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
-#          --data '{"ref": "refs/heads/master"}' \
-#          https://api.github.com/repos/class-dojo/infrastructure/actions/workflows/backend.yml/dispatches
+      - name: Deploy
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
+          --data '{"ref": "refs/heads/master"}' \
+          https://api.github.com/repos/class-dojo/infrastructure/actions/workflows/backend.yml/dispatches
