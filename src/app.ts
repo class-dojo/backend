@@ -1,6 +1,7 @@
 import express, {Express} from 'express';
 import {ContainerBuilder, YamlFileLoader} from 'node-dependency-injection';
 import {join} from 'path';
+import cors from 'cors';
 import Router from './Router';
 import Configurator from './components/Configurator';
 import RekognitionConnectionLocal from './components/RekognitionConnectionLocal';
@@ -59,6 +60,8 @@ container.compile();
 const router: Router = new Router(container);
 
 const app: Express = express();
+
+app.use(cors());
 
 app.use(express.json()); // json body parser
 app.use('/', router.getRestRouter());
