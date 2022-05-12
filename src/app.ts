@@ -5,7 +5,6 @@ import Router from './Router';
 import Configurator from './components/Configurator';
 import RekognitionConnectionLocal from './components/RekognitionConnectionLocal';
 
-
 // TODO: https://github.com/serverless/serverless-plugin-typescript/issues/188
 // components
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -32,16 +31,6 @@ import RekognitionModel from './models/RekognitionModel';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SentimentModel from './models/SentimentModel';
 
-
-// mocks
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as mockResponse1 from './mockResponses/mockResponse1.json';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as mockResponse2 from './mockResponses/mockResponse2.json';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as mockResponse3 from './mockResponses/mockResponse3.json';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as mockResponse4 from './mockResponses/mockResponse4.json';
 
 const srcDir = join(__dirname);
 const container = new ContainerBuilder(true, srcDir);
