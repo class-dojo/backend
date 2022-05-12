@@ -21,8 +21,6 @@ export default class Configurator {
 
     this.config = yaml.load(fs.readFileSync(__dirname + configPath, 'utf8'));
     this.selectAndApplyEnvParams();
-
-    console.log(this.config);
   }
 
   selectAndApplyEnvParams () {

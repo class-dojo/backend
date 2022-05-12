@@ -18,12 +18,6 @@ describe('ImageModel', () => {
 
     await Promise.all([image1, image2]);
 
-    console.log('config');
-    console.log(configurator.parameters());
-
-    console.log('env');
-    console.log(process.env);
-
     // this is how you mock unit tests
     // const s3Client = {} as S3Connection;
     // const configurator = {} as Configurator;
