@@ -30,9 +30,8 @@ jobs:
       - name: Build and release
         run: |
           docker-compose up -d
-          docker-compose run backend make -C production/ package qa
+          docker-compose run backend make -C production/ package qa release AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
           docker-compose down
-# release AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} (BELONGS AFTER qa)
 
       - name: Store Artifact
         uses: actions/upload-artifact@v2
