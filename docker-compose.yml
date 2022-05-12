@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   backend:
-    image: "node:14-bullseye"
+    image: "michalsimon/static-website:node14"
     environment:
       S3_BUCKETNAME: images
       S3_ENDPOINT: http://s3:9000
