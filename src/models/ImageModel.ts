@@ -15,7 +15,6 @@ export default class ImageModel extends BaseModel {
   async fetchImagesNames (videoUid: string): Promise<ObjectList> {
     const imagesIds =  await this.s3Model.listAllFiles(this.bucketName, videoUid);
     return imagesIds;
-
   }
 
   async storeFinalResults (dataAfterMagic : IFinalResponse, videoUid : string) {

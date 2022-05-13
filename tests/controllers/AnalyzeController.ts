@@ -12,9 +12,8 @@ describe('Analyze Controller', () => {
   const s3Model = container.get('s3Model') as S3Model;
   const configurator = container.get('configurator') as Configurator;
   const imageBucketName = configurator.parameters('parameters.s3.bucketName');
-  const image1 = s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
-  const image2 = s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
-  test('run action Default', () => {
+
+  test('run action Default', async () => {
     const request = {
       body: {
         videoUid: 'testVideo'
@@ -37,8 +36,9 @@ describe('Analyze Controller', () => {
         return;
       }) as unknown,
     } as Response;
-
-    analyzeController.actionDefault(request, response);
+    const image1 = await s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
+    const image2 = await s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
+    await analyzeController.actionDefault(request, response);
 
     expect(response.json).toBeCalledTimes(1);
   });

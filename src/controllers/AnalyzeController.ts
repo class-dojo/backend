@@ -25,7 +25,6 @@ export default class AnalyzeController extends BaseController {
       // send them to aws rekognition for analysis - SentimentModel
       // make transformation magic on the output - SentimentModel
       const dataAfterMagic = await this.sentimentModel.analyzeImages(imagesToAnalyze);
-      console.log('dataAfterMagic ->', dataAfterMagic);
 
       // save it to json and to a bucket - ImageModel
       // send the output back to FE

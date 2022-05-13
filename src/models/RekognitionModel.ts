@@ -10,8 +10,8 @@ export default class RekognitionModel extends BaseModel {
     this.rekognition = rekognitionConnection.getClient();
   }
 
-  detectFaces (image: string) {
-    const params = {
+  async detectFaces (image: string) {
+    const params : Rekognition.DetectFacesRequest = {
       Image: {
         S3Object: {
           Bucket: 'images', //TODO remove hard coded bucket
@@ -21,7 +21,8 @@ export default class RekognitionModel extends BaseModel {
       // todo define only attributes that we want
       Attributes: ['ALL']
     };
-    return this.rekognition.detectFaces(params);
+    const facesResult = await this.rekognition.detectFaces(params);
+    return facesResult;
   }
 
 }
