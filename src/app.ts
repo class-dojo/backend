@@ -1,6 +1,7 @@
 import express, {Express} from 'express';
 import {ContainerBuilder, YamlFileLoader} from 'node-dependency-injection';
 import {join} from 'path';
+import cors from 'cors';
 import Router from './Router';
 import Configurator from './components/Configurator';
 import RekognitionConnectionLocal from './components/RekognitionConnectionLocal';
@@ -20,6 +21,9 @@ import S3Connection from './components/S3Connection';
 import HealthCheckController from './controllers/HealthCheckController';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import AnalyzeController from './controllers/AnalyzeController';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3LinkController from './controllers/S3LinkController';
+
 
 // models
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,6 +34,10 @@ import ImageModel from './models/ImageModel';
 import RekognitionModel from './models/RekognitionModel';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SentimentModel from './models/SentimentModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3LinkModel from './models/S3LinkModel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3Model from './models/S3Model';
 
 
 const srcDir = join(__dirname);
@@ -52,6 +60,8 @@ container.compile();
 const router: Router = new Router(container);
 
 const app: Express = express();
+
+app.use(cors());
 
 app.use(express.json()); // json body parser
 app.use('/', router.getRestRouter());

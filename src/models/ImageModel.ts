@@ -2,6 +2,7 @@ import BaseModel from './BaseModel';
 import Configurator from '../components/Configurator';
 import {ObjectList} from 'aws-sdk/clients/s3';
 import S3Model from './S3Model';
+import { IFinalResponse } from './interface';
 
 export default class ImageModel extends BaseModel {
   private readonly bucketName: string;
@@ -12,25 +13,16 @@ export default class ImageModel extends BaseModel {
   }
 
   async fetchImagesNames (videoUid: string): Promise<ObjectList> {
-    const imagesIds =  await this.s3Model.listAllFiles(this.bucketName, videoUid);
-    console.log(imagesIds);
-    return imagesIds;
-
+    return await this.s3Model.listAllFiles(this.bucketName, videoUid);
   }
 
-  private static imagesExist (idsToCheck: string[], allFiles: ObjectList): boolean {
-    const allKeys = [];
-    for (const file of allFiles) {
-      if (idsToCheck.includes(file.Key)) {
-        allKeys.push(file.Key);
-      }
+  async storeFinalResults (dataAfterMagic: IFinalResponse, videoUid: string) {
+    //upload dataAfterMagic.stringify to s3
+    try {
+      await this.s3Model.put(this.bucketName, `results/${videoUid}.json`, JSON.stringify(dataAfterMagic));
+    } catch (err) {
+      throw new Error('Results not uploaded to S3');
+      console.error(err);
     }
-
-    return allKeys.length === idsToCheck.length;
-  }
-
-
-  storeFinalResults () {
-    return;
   }
 }
