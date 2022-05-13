@@ -5,17 +5,7 @@ import * as mockResponse1 from '../mockResponses/mockResponse1.json';
 import * as mockResponse2 from '../mockResponses/mockResponse2.json';
 import * as mockResponse3 from '../mockResponses/mockResponse3.json';
 import * as mockResponse4 from '../mockResponses/mockResponse4.json';
-import * as mockResponse5 from '../mockResponses/mockResponse1.json';
-import * as mockResponse6 from '../mockResponses/mockResponse2.json';
-import * as mockResponse7 from '../mockResponses/mockResponse3.json';
-import * as mockResponse8 from '../mockResponses/mockResponse4.json';
-import * as mockResponse9 from '../mockResponses/mockResponse1.json';
-import * as mockResponse10 from '../mockResponses/mockResponse2.json';
-import * as mockResponse11 from '../mockResponses/mockResponse3.json';
-import * as mockResponse12 from '../mockResponses/mockResponse4.json';
-import * as mockResponse13 from '../mockResponses/mockResponse1.json';
-import * as mockResponse14 from '../mockResponses/mockResponse2.json';
-import * as mockResponse15 from '../mockResponses/mockResponse3.json';
+
 import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionConnectionLocal extends BaseRekognitionConnection {
