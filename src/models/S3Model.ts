@@ -20,7 +20,7 @@ export default class S3Model extends BaseModel {
     return response.Body.toString();
   }
 
-  async put (bucket: string, key: string, body: any, params?: Omit<PutObjectRequest, 'Bucket'|'Key'>): Promise<PutObjectOutput> {
+  async put (bucket: string, key: string, body: Body, params?: Omit<PutObjectRequest, 'Bucket'|'Key'>): Promise<PutObjectOutput> {
     return await this.s3.putObject({
       Bucket: bucket,
       Key: key,

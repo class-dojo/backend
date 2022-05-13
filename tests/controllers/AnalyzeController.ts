@@ -14,6 +14,32 @@ describe('Analyze Controller', () => {
   const imageBucketName = configurator.parameters('parameters.s3.bucketName');
 
   test('run action Default', async () => {
+    await s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
+    await s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
+
+    const expectedOutput = {
+      status: {
+        averages: {attentionAverage: 0.58, moodAverage: 0.41, peopleAverage: 3},
+        framesArray: [{
+          amountOfPeople: 4,
+          attentionScore: 0.56,
+          isImportantAttention: false,
+          isImportantMood: false,
+          isImportantPeople: true,
+          moodScore: 0.49
+        }, {
+          amountOfPeople: 3,
+          attentionScore: 0.61,
+          isImportantAttention: false,
+          isImportantMood: false,
+          isImportantPeople: false,
+          moodScore: 0.32
+        }],
+        peaks: {attentionPeak: 0.61, moodPeak: 0.49, peoplePeak: 4},
+        valleys: {attentionValley: 0.56, moodValley: 0.32, peopleValley: 3}
+      }
+    };
+
     const request = {
       body: {
         videoUid: 'testVideo'
@@ -21,12 +47,7 @@ describe('Analyze Controller', () => {
     } as Request;
     const response = {
       json: fn((data) => {
-        expect(data).toStrictEqual({
-          status: 'Healthy :)',
-          versionInfo: 'dev',
-          buildDate: null,
-          stable: false,
-        });
+        expect(data).toStrictEqual(expectedOutput);
       }) as unknown,
       status: (code) => {
         expect(code).toBe(200);
@@ -36,10 +57,8 @@ describe('Analyze Controller', () => {
         return;
       }) as unknown,
     } as Response;
-    const image1 = await s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
-    const image2 = await s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
-    await analyzeController.actionDefault(request, response);
 
+    await analyzeController.actionDefault(request, response);
     expect(response.json).toBeCalledTimes(1);
   });
 });

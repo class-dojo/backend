@@ -33,6 +33,7 @@ export default class AnalyzeController extends BaseController {
       const result = {
         status: dataAfterMagic,
       };
+
       response.setHeader('Content-Type', 'application/json');
       response.status(200).json(result);
     } catch (error) { //implement more catches

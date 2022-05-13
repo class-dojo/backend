@@ -13,13 +13,16 @@ export default class ImageModel extends BaseModel {
   }
 
   async fetchImagesNames (videoUid: string): Promise<ObjectList> {
-    const imagesIds =  await this.s3Model.listAllFiles(this.bucketName, videoUid);
-    return imagesIds;
+    return await this.s3Model.listAllFiles(this.bucketName, videoUid);
   }
 
-  async storeFinalResults (dataAfterMagic : IFinalResponse, videoUid : string) {
+  async storeFinalResults (dataAfterMagic: IFinalResponse, videoUid: string) {
     //upload dataAfterMagic.stringify to s3
-    await this.s3Model.put(this.bucketName, `json${videoUid}`,dataAfterMagic);
-    return;
+    try {
+      await this.s3Model.put(this.bucketName, `results/${videoUid}.json`, JSON.stringify(dataAfterMagic));
+    } catch (err) {
+      throw new Error('Results not uploaded to S3');
+      console.error(err);
+    }
   }
 }
