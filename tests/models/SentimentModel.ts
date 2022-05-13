@@ -18,8 +18,10 @@ describe('Sentiment model', () => {
 
   test('should display correct final results', async () => {
 
-    const finalResults = await sentimentModel.analyzeImages([{Key: 'image.jpg'},{Key: 'image2.jpg'}]);
+    const finalResults = await sentimentModel.analyzeImages([{Key: 'image.jpg'},{Key: 'image2.jpg'},{Key: 'image3.jpg'},{Key: 'image4.jpg'},{Key: 'image5.jpg'},{Key: 'image6.jpg'},{Key: 'image7.jpg'},{Key: 'image8.jpg'},{Key: 'image9.jpg'},{Key: 'image10.jpg'},{Key: 'image11.jpg'},{Key: 'image12.jpg'},{Key: 'image13.jpg'},{Key: 'image14.jpg'},{Key: 'image15.jpg'}]);
     // check frame array
+    console.log(finalResults);
+
     expect(finalResults.framesArray).toHaveLength(2);
 
     // check for peaks and valleys

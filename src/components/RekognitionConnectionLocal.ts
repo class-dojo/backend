@@ -5,6 +5,17 @@ import * as mockResponse1 from '../mockResponses/mockResponse1.json';
 import * as mockResponse2 from '../mockResponses/mockResponse2.json';
 import * as mockResponse3 from '../mockResponses/mockResponse3.json';
 import * as mockResponse4 from '../mockResponses/mockResponse4.json';
+import * as mockResponse5 from '../mockResponses/mockResponse1.json';
+import * as mockResponse6 from '../mockResponses/mockResponse2.json';
+import * as mockResponse7 from '../mockResponses/mockResponse3.json';
+import * as mockResponse8 from '../mockResponses/mockResponse4.json';
+import * as mockResponse9 from '../mockResponses/mockResponse1.json';
+import * as mockResponse10 from '../mockResponses/mockResponse2.json';
+import * as mockResponse11 from '../mockResponses/mockResponse3.json';
+import * as mockResponse12 from '../mockResponses/mockResponse4.json';
+import * as mockResponse13 from '../mockResponses/mockResponse1.json';
+import * as mockResponse14 from '../mockResponses/mockResponse2.json';
+import * as mockResponse15 from '../mockResponses/mockResponse3.json';
 import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionConnectionLocal extends BaseRekognitionConnection {
@@ -22,6 +33,17 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
           'image2.jpg': mockResponse2,
           'image3.jpg': mockResponse3,
           'image4.jpg': mockResponse4,
+          'image5.jpg': mockResponse5,
+          'image6.jpg': mockResponse6,
+          'image7.jpg': mockResponse7,
+          'image8.jpg': mockResponse8,
+          'image9.jpg': mockResponse9,
+          'image10.jpg': mockResponse10,
+          'image11.jpg': mockResponse11,
+          'image12.jpg': mockResponse12,
+          'image13.jpg': mockResponse13,
+          'image14.jpg': mockResponse14,
+          'image15.jpg': mockResponse15,
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
