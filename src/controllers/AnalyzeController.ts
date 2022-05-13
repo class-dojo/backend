@@ -19,6 +19,9 @@ export default class AnalyzeController extends BaseController {
   }
 
   async actionDefault (request: Request, response: Response): Promise<void> {
+    console.log('/ANALYZE NOT IMPLEMENTED');
+    console.log(request.body);
+
     await this.imageModel.checkIfImagesExist(['verycoolcall/image']);
     // get image ids from request
     const imagesArray = ['image.jpg'];
