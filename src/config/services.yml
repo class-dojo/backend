@@ -55,6 +55,7 @@ services:
     class: 'models/RekognitionModel'
     arguments:
       - '@rekognitionConnection'
+      - '@configurator'
 
   sentimentModel:
     class: 'models/SentimentModel'
