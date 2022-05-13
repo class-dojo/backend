@@ -62,9 +62,9 @@ components:
         images: [imageName.jpg]
     Images:
       properties:
-        images:
-          type: array
+        videoUid:
+          type: string
       required:
-        - images
+        - videoUid
       example:
-        images: [imageName.jpg]
+        videoUid: testVideo

@@ -13,8 +13,8 @@ describe('ImageModel', () => {
     const configurator = container.get('configurator') as Configurator;
     const imageBucketName = configurator.parameters('parameters.s3.bucketName');
 
-    const image1 = s3Model.put(imageBucketName, 'image.jpg', '');
-    const image2 = s3Model.put(imageBucketName, 'image2.jpg', '');
+    const image1 = s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
+    const image2 = s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
 
     await Promise.all([image1, image2]);
 
@@ -23,10 +23,9 @@ describe('ImageModel', () => {
     // const configurator = {} as Configurator;
     // const imageModel = new ImageModel(s3Client, configurator);
 
-    const outputTrue = await imageModel.checkIfImagesExist(['image.jpg', 'image2.jpg']);
-    const outputFalse = await imageModel.checkIfImagesExist(['image.jpg', 'image3.jpg']);
+    const listOfImages = await imageModel.fetchImagesNames('testVideo');
 
-    expect(outputTrue).toBe(true);
-    expect(outputFalse).toBe(false);
+    expect(listOfImages[0].Key).toBe('testVideo/image.jpg');
+    expect(listOfImages[1].Key).toBe('testVideo/image2.jpg');
   });
 });

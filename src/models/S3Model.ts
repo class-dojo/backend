@@ -1,7 +1,7 @@
 import BaseModel from './BaseModel';
 import S3Connection from '../components/S3Connection';
 import {S3} from 'aws-sdk';
-import {GetObjectRequest, ObjectList, PutObjectOutput, PutObjectRequest} from 'aws-sdk/clients/s3';
+import {Body, GetObjectRequest, ObjectList, PutObjectOutput, PutObjectRequest} from 'aws-sdk/clients/s3';
 
 export default class S3Model extends BaseModel {
   private s3: S3;
@@ -20,7 +20,7 @@ export default class S3Model extends BaseModel {
     return response.Body.toString();
   }
 
-  async put (bucket: string, key: string, body: string, params?: Omit<PutObjectRequest, 'Bucket'|'Key'>): Promise<PutObjectOutput> {
+  async put (bucket: string, key: string, body: Body, params?: Omit<PutObjectRequest, 'Bucket'|'Key'>): Promise<PutObjectOutput> {
     return await this.s3.putObject({
       Bucket: bucket,
       Key: key,
