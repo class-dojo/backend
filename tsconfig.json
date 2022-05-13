@@ -12,7 +12,7 @@
     "sourceMap": true,
     "target": "es2020",
     "outDir": ".build",
-    "module": "es2020",
+    "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
       "es2020"
@@ -25,8 +25,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "types/**/*.ts",
-    "tests/**/*.ts"
+    "types/**/*.ts"
   ],
   "ts-node": {
     "compilerOptions": {
