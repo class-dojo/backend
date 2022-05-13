@@ -17,6 +17,9 @@ module.exports = {
     '<rootDir>/tests/mocks.ts',
     '<rootDir>/tests/testContainer.ts',
   ],
+  watchPathIgnorePatterns: [
+    '<rootDir>/s3-data/',
+  ],
   maxConcurrency: 1,
   transform: {
     '^.+\\.(ts)$': 'ts-jest',
