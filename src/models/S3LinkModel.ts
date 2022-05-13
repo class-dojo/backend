@@ -16,7 +16,7 @@ export default class S3LinkModel extends BaseModel {
       allPresignedLinks[filename] = this.s3Model.presignedPutLink(this.bucketName, filename);
     }
 
-    return allPresignedLinks;
+    return Object.values(allPresignedLinks);
   }
 
 }
