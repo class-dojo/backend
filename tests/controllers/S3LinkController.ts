@@ -4,22 +4,22 @@ import {Request, Response} from 'express';
 import fn = jest.fn;
 import S3LinkController from '../../src/controllers/S3LinkController';
 
-describe('Health Check Controller', () => {
+describe('S3 Link Controller', () => {
   const container = containerBuilder();
   const s3LinkController = container.get('s3LinkController') as S3LinkController;
 
   test('run action Default', () => {
     const request = {
       body: {
-        images: ['image22.jpg', 'image33.jpg']
+        frames: ['image22.jpg', 'image33.jpg']
       }
     } as Request;
     const response = {
       json: fn((data) => {
-        const fileNames = Object.keys(data);
+        // const fileNames = Object.keys(data);
 
-        expect(fileNames).toHaveLength(2);
-        expect(fileNames).toStrictEqual(['image22.jpg', 'image33.jpg']);
+        expect(data).toHaveLength(3);
+        // expect(fileNames).toStrictEqual(['image22.jpg', 'image33.jpg']);
       }) as unknown,
       status: (code) => {
         expect(code).toBe(200);
