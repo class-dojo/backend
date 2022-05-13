@@ -2,6 +2,7 @@ import BaseModel from './BaseModel';
 import {Rekognition} from 'aws-sdk';
 import BaseRekognitionConnection from '../components/BaseRekognitionConnection';
 import Configurator from '../components/Configurator';
+import {DetectFacesResponse} from 'aws-sdk/clients/rekognition';
 
 export default class RekognitionModel extends BaseModel {
   private readonly rekognition: Rekognition;
@@ -24,8 +25,7 @@ export default class RekognitionModel extends BaseModel {
       // todo define only attributes that we want
       Attributes: ['ALL']
     };
-    const facesResult = await this.rekognition.detectFaces(params);
-    return facesResult;
+    return this.rekognition.detectFaces(params) as DetectFacesResponse;
   }
 
 }
