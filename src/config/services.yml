@@ -39,6 +39,11 @@ services:
     arguments:
       - '@s3LinkModel'
 
+  analyzedVideoResultController:
+    class: 'controllers/AnalyzedVideoResultController'
+    arguments:
+      - '@s3GetAnalyzedVideoResultModel'
+
   # Models
   s3Model:
     class: 'models/S3Model'
@@ -67,3 +72,9 @@ services:
     arguments:
       - '@s3Model'
       - '@configurator'
+
+  s3GetAnalyzedVideoResultModel:
+    class: 'models/S3GetAnalyzedVideoResultModel'
+      arguments:
+        - '@s3Model'
+        - '@configurator'

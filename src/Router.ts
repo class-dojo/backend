@@ -4,6 +4,7 @@ import {Router as ExpressRouter} from 'express';
 const controllers = [
   'healthCheckController',
   'analyzeController',
+  'analyzedVideoResultController',
   's3LinkController'
 ];
 
