@@ -14,8 +14,8 @@ export default class AnalyzedVideoResultController extends BaseController {
     });
   }
 
-  actionDefault (request: Request, response: Response): void {
-    const analysisResult = this.s3GetAnalyzedVideoResultModel.getResult(request.params.id);
+  async actionDefault (request: Request, response: Response): Promise<void> {
+    const analysisResult = await this.s3GetAnalyzedVideoResultModel.getResult(request.params.id);
     response.setHeader('Content-Type', 'application/json');
     response.status(200).json({analysisResult});
   }

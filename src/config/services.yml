@@ -75,6 +75,6 @@ services:
 
   s3GetAnalyzedVideoResultModel:
     class: 'models/S3GetAnalyzedVideoResultModel'
-      arguments:
-        - '@s3Model'
-        - '@configurator'
+    arguments:
+      - '@s3Model'
+      - '@configurator'
