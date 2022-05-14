@@ -10,6 +10,7 @@ export default class S3Connection {
 
     this.s3 = new S3({
       signatureVersion: 'v4',
+      s3ForcePathStyle: true,
       region,
       endpoint,
       credentials: new Credentials(accessKeyId, secretAccessKey, session),
