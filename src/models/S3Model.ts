@@ -41,7 +41,7 @@ export default class S3Model extends BaseModel {
     return this.s3.getSignedUrl('putObject', {
       Bucket: bucket,
       Key: filename,
-      Expires: 604800
+      Expires: 3600
     });
   }
 }

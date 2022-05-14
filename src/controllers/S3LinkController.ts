@@ -15,7 +15,7 @@ export default class S3LinkController extends BaseController {
     });
   }
 
-  async actionDefault (request: Request, response: Response): Promise<void> {
+  actionDefault (request: Request, response: Response): void {
     const links = this.s3LinkModel.getLinks(request.body.frames);
     response.setHeader('Content-Type', 'application/json');
     response.status(200).json({links});

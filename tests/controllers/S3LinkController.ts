@@ -11,14 +11,14 @@ describe('S3 Link Controller', () => {
   test('run action Default', () => {
     const request = {
       body: {
-        frames: ['image22.jpg', 'image33.jpg']
+        videoId: 'uuidofvide',
+        frames: ['uuidofvide/image22.jpg', 'uuidofvide/image33.jpg']
       }
     } as Request;
     const response = {
       json: fn((data) => {
         // const fileNames = Object.keys(data);
-
-        expect(data).toHaveLength(3);
+        expect(data.links).toHaveLength(2);
         // expect(fileNames).toStrictEqual(['image22.jpg', 'image33.jpg']);
       }) as unknown,
       status: (code) => {
