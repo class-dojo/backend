@@ -25,7 +25,7 @@ export default class RekognitionModel extends BaseModel {
       // todo define only attributes that we want
       Attributes: ['ALL']
     };
+
     return await this.rekognition.detectFaces(params).promise();
   }
-
 }

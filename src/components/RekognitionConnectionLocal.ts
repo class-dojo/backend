@@ -29,8 +29,10 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const response = allMocks[imgName[imgName.length - 1]].default; //testvideo/image1.jpg
-        return response as DetectFacesResponse;
 
+        return {
+          promise: () => Promise.resolve(response as DetectFacesResponse),
+        };
       }
     } as Rekognition;
   }
