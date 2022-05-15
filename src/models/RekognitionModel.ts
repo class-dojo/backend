@@ -14,18 +14,18 @@ export default class RekognitionModel extends BaseModel {
     this.bucketName = configurator.parameters('parameters.s3.bucketName');
   }
 
-  async detectFaces (image: string) {
+  async detectFaces (image: string): Promise<DetectFacesResponse> {
     const params : Rekognition.DetectFacesRequest = {
       Image: {
         S3Object: {
-          Bucket: this.bucketName, //TODO remove hard coded bucket
+          Bucket: this.bucketName,
           Name: image
         },
       },
       // todo define only attributes that we want
       Attributes: ['ALL']
     };
-    return this.rekognition.detectFaces(params) as DetectFacesResponse;
+    return await this.rekognition.detectFaces(params).promise();
   }
 
 }
