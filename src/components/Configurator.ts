@@ -9,6 +9,7 @@ export default class Configurator {
   mapping = {
     'S3_BUCKETNAME': 'parameters.s3.bucketName',
     'S3_ENDPOINT': 'parameters.s3.endpoint',
+    'REKOGNITION_ENDPOINT': 'parameters.rekognition.endpoint',
     'AWS_ACCESS_KEY_ID': 'parameters.aws.accessKeyId',
     'AWS_SECRET_ACCESS_KEY': 'parameters.aws.secretAccessKey',
     'AWS_SESSION_TOKEN': 'parameters.aws.session',
