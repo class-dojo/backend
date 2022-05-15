@@ -57,14 +57,14 @@ components:
         images:
           type: array
       required:
-        - images
+        - frames
       example:
-        images: [imageName.jpg]
+        frames: [imageName.jpg]
     Images:
       properties:
         videoUid:
           type: string
       required:
-        - videoUid
+        - videoId
       example:
-        videoUid: testVideo
+        videoId: testVideo
