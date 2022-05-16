@@ -30,9 +30,16 @@ export default class SentimentModel extends BaseModel {
     };
   }
 
-  async feedImageToAWSReckon (image : string) { //image1.png
-    const response = await this.rekognitionModel.detectFaces(image);
-    return response as DetectFacesResponse;
+  async feedImageToAWSReckon (images: ObjectList): Promise<DetectFacesResponse[]> {
+
+    const promises: Promise<DetectFacesResponse>[] = [];
+
+    for (const image of images) {
+      const imagePromise = this.rekognitionModel.detectFaces(image.Key);
+      promises.push(imagePromise);
+    }
+
+    return Promise.all(promises) ;
   }
 
   async analyzeImages (images: ObjectList) {
@@ -49,8 +56,11 @@ export default class SentimentModel extends BaseModel {
       people: 0
     };
     const framesArray: IFrameInfo[]  = [];
-    for (const image of images) {
-      const data = await this.feedImageToAWSReckon(image.Key); //needs to be parsed in production probably
+
+    const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
+
+    for (const data of detectedFacesImages) {
+
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;

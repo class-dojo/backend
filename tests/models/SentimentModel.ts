@@ -8,9 +8,9 @@ describe('Sentiment model', () => {
 
   test('should calculate scores', async () => {
 
-    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon('image.jpg');
+    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon([{Key:'image.jpg'}]);
 
-    const analyzed = sentimentModel.manipulateData(awsDetectFacesResponse.FaceDetails);
+    const analyzed = sentimentModel.manipulateData(awsDetectFacesResponse[0].FaceDetails);
 
     expect(analyzed.attentionScore).toBe(0.56);
     expect(analyzed.moodScore).toBe(0.49);
