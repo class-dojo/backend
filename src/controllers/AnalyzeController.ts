@@ -30,12 +30,8 @@ export default class AnalyzeController extends BaseController {
       // send the output back to FE
       await this.imageModel.storeFinalResults(dataAfterMagic, request.body.videoId);
 
-      const result = {
-        status: dataAfterMagic,
-      };
-
       response.setHeader('Content-Type', 'application/json');
-      response.status(200).json(result);
+      response.status(200).json(dataAfterMagic);
     } catch (error) { //implement more catches
       console.log(error);
       response.status(400);
