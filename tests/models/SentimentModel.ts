@@ -8,7 +8,7 @@ describe('Sentiment model', () => {
 
   test('should calculate scores', async () => {
 
-    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon([{Key:'image.jpg'}]);
+    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon([{Key:'testVideo/1.jpg'}]);
 
     const analyzed = sentimentModel.manipulateData(awsDetectFacesResponse[0].FaceDetails);
 
@@ -19,7 +19,7 @@ describe('Sentiment model', () => {
 
   test('should display correct final results', async () => {
 
-    const finalResults = await sentimentModel.analyzeImages([{Key: 'image.jpg'},{Key: 'image2.jpg'}]);
+    const finalResults = await sentimentModel.analyzeImages([{Key: 'testVideo/2.jpg'},{Key: 'testVideo/1.jpg'}]);
     // check frame array
 
     expect(finalResults.framesArray).toHaveLength(2);

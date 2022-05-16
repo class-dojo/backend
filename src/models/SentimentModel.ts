@@ -29,6 +29,9 @@ export default class SentimentModel extends BaseModel {
       amountOfPeople
     };
   }
+  sortImages (images : ObjectList) {
+    images.sort((a,b) => Number(a.Key.match(/\d+(?=\.jpg$)/g)) - Number(b.Key.match(/\d+(?=\.jpg$)/g)));
+  }
 
   async feedImageToAWSReckon (images: ObjectList): Promise<DetectFacesResponse[]> {
 
@@ -56,6 +59,8 @@ export default class SentimentModel extends BaseModel {
       people: 0
     };
     const framesArray: IFrameInfo[]  = [];
+    //sort
+    this.sortImages(images);
 
     const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
 

@@ -62,7 +62,7 @@ components:
         frames: [imageName.jpg]
     Images:
       properties:
-        videoUid:
+        videoId:
           type: string
       required:
         - videoId

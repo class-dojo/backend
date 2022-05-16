@@ -19,10 +19,10 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
     return {
       detectFaces: (incomingData: Rekognition.DetectFacesRequest) => {
         const allMocks = {
-          'image.jpg': mockResponse1,
-          'image2.jpg': mockResponse2,
-          'image3.jpg': mockResponse3,
-          'image4.jpg': mockResponse4,
+          '1.jpg': mockResponse1,
+          '2.jpg': mockResponse2,
+          '3.jpg': mockResponse3,
+          '4.jpg': mockResponse4,
         };
 
         const imgName : string[] = incomingData.Image.S3Object.Name.split('/');
