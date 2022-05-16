@@ -9,9 +9,9 @@ describe('Rekognition Model', () => {
     const container = containerBuilder();
     const rekognitionModel = container.get('rekognitionModel') as RekognitionModel;
 
-    const output4 = await rekognitionModel.detectFaces('rekogTest/image.jpg');
+    const output4 = await rekognitionModel.detectFaces('rekogTest/1.jpg');
     expect(output4.FaceDetails).toHaveLength(4); // this is because of mock data showing 4 faces!
-    const output3 = await rekognitionModel.detectFaces('rekogTest/image2.jpg');
+    const output3 = await rekognitionModel.detectFaces('rekogTest/2.jpg');
     expect(output3.FaceDetails).toHaveLength(3); // this is because of mock data showing 3 faces!
   });
 });

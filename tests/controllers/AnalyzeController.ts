@@ -14,8 +14,8 @@ describe('Analyze Controller', () => {
   const imageBucketName = configurator.parameters('parameters.s3.bucketName');
 
   test('run action Default', async () => {
-    await s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
-    await s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
+    await s3Model.put(imageBucketName, 'testVideo/1.jpg', '');
+    await s3Model.put(imageBucketName, 'testVideo/2.jpg', '');
 
     const expectedOutput = {
 
@@ -24,14 +24,14 @@ describe('Analyze Controller', () => {
         amountOfPeople: 4,
         attentionScore: 0.56,
         isImportantAttention: false,
-        isImportantMood: false,
+        isImportantMood: true,
         isImportantPeople: true,
         moodScore: 0.49
       }, {
         amountOfPeople: 3,
         attentionScore: 0.61,
         isImportantAttention: false,
-        isImportantMood: false,
+        isImportantMood: true,
         isImportantPeople: false,
         moodScore: 0.32
       }],

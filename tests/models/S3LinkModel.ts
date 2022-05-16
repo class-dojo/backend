@@ -7,7 +7,7 @@ describe('S3 Links model', () => {
   const s3LinkModel = container.get('s3LinkModel') as S3LinkModel;
 
   test('should get Links', () => {
-    const links: string[] = s3LinkModel.getLinks(['testVideo/image.jpg', 'testVideo/image2.jpg']);
+    const links: string[] = s3LinkModel.getLinks(['testVideo/1.jpg', 'testVideo/2.jpg']);
     // todo fix tests when we return key value pair
     // const keys = Object.keys(links);
     expect(links).toHaveLength(2);
