@@ -52,7 +52,7 @@ export default class SentimentModel extends BaseModel {
     let attentionValley;
     let peoplePeak;
     let peopleValley;
-    const isImportantTreshold = 0.3;
+    const isImportantTreshold = 0.1;
     const sums = {
       attention: 0,
       mood: 0,
