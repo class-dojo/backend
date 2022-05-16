@@ -15,8 +15,9 @@ describe('ImageModel', () => {
 
     const image1 = s3Model.put(imageBucketName, 'testVideo/image.jpg', '');
     const image2 = s3Model.put(imageBucketName, 'testVideo/image2.jpg', '');
+    const image3 = s3Model.put(imageBucketName, 'alsoTest/image.jpg', '');
 
-    await Promise.all([image1, image2]);
+    await Promise.all([image1, image2, image3]);
 
     // this is how you mock unit tests
     // const s3Client = {} as S3Connection;
@@ -27,5 +28,6 @@ describe('ImageModel', () => {
 
     expect(listOfImages[0].Key).toBe('testVideo/image.jpg');
     expect(listOfImages[1].Key).toBe('testVideo/image2.jpg');
+    expect(listOfImages).toHaveLength(2);
   });
 });

@@ -42,7 +42,7 @@ describe('Analyze Controller', () => {
 
     const request = {
       body: {
-        videoUid: 'testVideo'
+        videoId: 'testVideo'
       }
     } as Request;
     const response = {
