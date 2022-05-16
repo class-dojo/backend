@@ -12,7 +12,7 @@ describe('S3 Link Controller', () => {
     const request = {
       body: {
         videoId: 'uuidofvide',
-        frames: ['uuidofvide/image22.jpg', 'uuidofvide/image33.jpg']
+        frames: ['uuidofvide/22.jpg', 'uuidofvide/33.jpg']
       }
     } as Request;
     const response = {

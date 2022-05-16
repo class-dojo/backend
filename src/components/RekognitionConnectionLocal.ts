@@ -24,11 +24,10 @@ export default class RekognitionConnectionLocal extends BaseRekognitionConnectio
           '3.jpg': mockResponse3,
           '4.jpg': mockResponse4,
         };
-
         const imgName : string[] = incomingData.Image.S3Object.Name.split('/');
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const response = allMocks[imgName[imgName.length - 1]].default; //testvideo/image1.jpg
+        const response = allMocks[imgName[imgName.length - 1]].default; //testvideo/1.jpg
 
         return {
           promise: () => Promise.resolve(response as DetectFacesResponse),
