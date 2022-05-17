@@ -98,13 +98,13 @@ export default class SentimentModel extends BaseModel {
       attentionAverage: parseFloat((sums.attention  / framesArray.length).toFixed(2)),
       peopleAverage: Math.floor( sums.people / framesArray.length )
     };
-    //calculating importance based on averages
-    for (const frame of framesArray) {
-      frame.isImportantAttention = this.calculateImportance(frame.attentionScore, averages.attentionAverage, isImportantTreshold);
-      frame.isImportantMood = this.calculateImportance(frame.moodScore, averages.moodAverage, isImportantTreshold);
-      frame.isImportantPeople = this.calculateImportance(frame.amountOfPeople, averages.peopleAverage, isImportantTreshold);
-      if (frame.isImportantAttention || frame.isImportantMood || frame.isImportantPeople) {
-        frame.importantFrame = images[imagesIndex].Key;
+    //calculating importance based on averages and previus value
+    for (const frameIndex in framesArray) {
+      framesArray[frameIndex].isImportantAttention = (this.calculateImportance(framesArray[frameIndex].attentionScore, averages.attentionAverage, isImportantTreshold) && framesArray[+frameIndex - 1]?.isImportantAttention !== true);
+      framesArray[frameIndex].isImportantMood = (this.calculateImportance(framesArray[frameIndex].moodScore, averages.moodAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantMood !== true);
+      framesArray[frameIndex].isImportantPeople = (this.calculateImportance(framesArray[frameIndex].amountOfPeople, averages.peopleAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantPeople !== true);
+      if (framesArray[frameIndex].isImportantAttention || framesArray[frameIndex].isImportantMood || framesArray[frameIndex].isImportantPeople) {
+        framesArray[frameIndex].importantFrame = images[imagesIndex].Key;
       }
       imagesIndex++;
     }

@@ -18,7 +18,7 @@ export default class AnalyzedVideoResultController extends BaseController {
     try {
       const analysisResult = await this.s3GetAnalyzedVideoResultModel.getResult(request.params.id);
       response.setHeader('Content-Type', 'application/json');
-      response.status(200).json({analysisResult});
+      response.status(200).json(analysisResult);
     } catch (error) {
       response.status(501).json({message: 'no such file'});
     }
