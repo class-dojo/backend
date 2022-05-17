@@ -10,7 +10,7 @@ export default class S3GetAnalyzedVideoResultModel extends BaseModel {
   }
 
   async getResult (path: string): Promise<any> {
-    return await this.s3Model.getResult(this.bucketName, path);
+    return await this.s3Model.get(this.bucketName, `results/${path}.json`);
   }
 
 }

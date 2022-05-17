@@ -55,6 +55,7 @@ export default class SentimentModel extends BaseModel {
     let peoplePeak;
     let peopleValley;
     const isImportantTreshold = 0.1;
+    let imagesIndex = 0;
     const sums = {
       attention: 0,
       mood: 0,
@@ -65,9 +66,7 @@ export default class SentimentModel extends BaseModel {
     this.sortImages(images);
 
     const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
-
     for (const data of detectedFacesImages) {
-
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;
@@ -104,6 +103,10 @@ export default class SentimentModel extends BaseModel {
       frame.isImportantAttention = this.calculateImportance(frame.attentionScore, averages.attentionAverage, isImportantTreshold);
       frame.isImportantMood = this.calculateImportance(frame.moodScore, averages.moodAverage, isImportantTreshold);
       frame.isImportantPeople = this.calculateImportance(frame.amountOfPeople, averages.peopleAverage, isImportantTreshold);
+      if (frame.isImportantAttention || frame.isImportantMood || frame.isImportantPeople) {
+        frame.importantFrame = images[imagesIndex].Key;
+      }
+      imagesIndex++;
     }
     const response : IFinalResponse = {
       framesArray,

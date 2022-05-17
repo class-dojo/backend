@@ -18,9 +18,14 @@ export interface IFrameInfo {
   isImportantPeople? : boolean,
   isImportantAttention? : boolean,
   isImportantMood? : boolean,
+  importantFrame?: string
 }
 export interface IFinalResponse {
   framesArray: IFrameInfo[];
+  videoName?: string;
+  videoDate?: string;
+  duration?: number;
+  accuracy?: number;
     peaks: {
         moodPeak: number;
         attentionPeak: number;
