@@ -20,8 +20,10 @@ export default class SentimentModel extends BaseModel {
       attentionScore += this.calculateAttentionScore(face);
     }
     const amountOfPeople = this.AmountOfPeople(facesArray);
-    moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
-    attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
+    if (amountOfPeople > 0) {
+      moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
+      attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
+    }
 
     return {
       attentionScore,
