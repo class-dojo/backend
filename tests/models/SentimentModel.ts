@@ -8,9 +8,9 @@ describe('Sentiment model', () => {
 
   test('should calculate scores', async () => {
 
-    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon('image.jpg');
+    const awsDetectFacesResponse = await sentimentModel.feedImageToAWSReckon([{Key:'testVideo/1.jpg'}]);
 
-    const analyzed = sentimentModel.manipulateData(awsDetectFacesResponse.FaceDetails);
+    const analyzed = sentimentModel.manipulateData(awsDetectFacesResponse[0].FaceDetails);
 
     expect(analyzed.attentionScore).toBe(0.56);
     expect(analyzed.moodScore).toBe(0.49);
@@ -19,7 +19,7 @@ describe('Sentiment model', () => {
 
   test('should display correct final results', async () => {
 
-    const finalResults = await sentimentModel.analyzeImages([{Key: 'image.jpg'},{Key: 'image2.jpg'}]);
+    const finalResults = await sentimentModel.analyzeImages([{Key: 'testVideo/2.jpg'},{Key: 'testVideo/1.jpg'}]);
     // check frame array
 
     expect(finalResults.framesArray).toHaveLength(2);
@@ -32,7 +32,7 @@ describe('Sentiment model', () => {
     expect(finalResults.valleys.attentionValley).toBe(0.56);
     expect(finalResults.valleys.peopleValley).toBe(3);
     expect(finalResults.framesArray[0].isImportantAttention).toBe(false);
-    expect(finalResults.framesArray[0].isImportantMood).toBe(false);
+    expect(finalResults.framesArray[0].isImportantMood).toBe(true);
     expect(finalResults.framesArray[0].isImportantPeople).toBe(true);
 
     // check for averages

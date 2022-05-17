@@ -11,5 +11,6 @@ parameters:
   aws:
     accessKeyId: ''
     secretAccessKey: ''
+    session: ''
 
   env: 'define-environment-dev-or-prod'

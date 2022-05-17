@@ -21,21 +21,17 @@ export default class AnalyzeController extends BaseController {
   async actionDefault (request: Request, response: Response): Promise<void> {
     try {
       // get image ids from request
-      const imagesToAnalyze = await this.imageModel.fetchImagesNames(request.body.videoUid);
+      const imagesToAnalyze = await this.imageModel.fetchImagesNames(request.body.videoId);
       // send them to aws rekognition for analysis - SentimentModel
       // make transformation magic on the output - SentimentModel
       const dataAfterMagic = await this.sentimentModel.analyzeImages(imagesToAnalyze);
 
       // save it to json and to a bucket - ImageModel
       // send the output back to FE
-      await this.imageModel.storeFinalResults(dataAfterMagic, request.body.videoUid);
-
-      const result = {
-        status: dataAfterMagic,
-      };
+      await this.imageModel.storeFinalResults(dataAfterMagic, request.body.videoId);
 
       response.setHeader('Content-Type', 'application/json');
-      response.status(200).json(result);
+      response.status(200).json(dataAfterMagic);
     } catch (error) { //implement more catches
       console.log(error);
       response.status(400);

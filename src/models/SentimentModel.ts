@@ -20,8 +20,10 @@ export default class SentimentModel extends BaseModel {
       attentionScore += this.calculateAttentionScore(face);
     }
     const amountOfPeople = this.AmountOfPeople(facesArray);
-    moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
-    attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
+    if (amountOfPeople > 0) {
+      moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
+      attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
+    }
 
     return {
       attentionScore,
@@ -29,10 +31,20 @@ export default class SentimentModel extends BaseModel {
       amountOfPeople
     };
   }
+  sortImages (images : ObjectList) {
+    images.sort((a,b) => Number(a.Key.match(/\d+(?=\.jpg$)/g)) - Number(b.Key.match(/\d+(?=\.jpg$)/g)));
+  }
 
-  async feedImageToAWSReckon (image : string) { //image1.png
-    const response = await this.rekognitionModel.detectFaces(image);
-    return response as DetectFacesResponse;
+  async feedImageToAWSReckon (images: ObjectList): Promise<DetectFacesResponse[]> {
+
+    const promises: Promise<DetectFacesResponse>[] = [];
+
+    for (const image of images) {
+      const imagePromise = this.rekognitionModel.detectFaces(image.Key);
+      promises.push(imagePromise);
+    }
+
+    return Promise.all(promises) ;
   }
 
   async analyzeImages (images: ObjectList) {
@@ -42,15 +54,20 @@ export default class SentimentModel extends BaseModel {
     let attentionValley;
     let peoplePeak;
     let peopleValley;
-    const isImportantTreshold = 0.3;
+    const isImportantTreshold = 0.1;
     const sums = {
       attention: 0,
       mood: 0,
       people: 0
     };
     const framesArray: IFrameInfo[]  = [];
-    for (const image of images) {
-      const data = await this.feedImageToAWSReckon(image.Key); //needs to be parsed in production probably
+    //sort
+    this.sortImages(images);
+
+    const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
+
+    for (const data of detectedFacesImages) {
+
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;
