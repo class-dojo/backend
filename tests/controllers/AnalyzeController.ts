@@ -18,22 +18,26 @@ describe('Analyze Controller', () => {
     await s3Model.put(imageBucketName, 'testVideo/2.jpg', '');
 
     const expectedOutput = {
-
+      accuracy: 5,
+      duration: 30,
+      videoDate: '17/05/2022',
+      videoName: 'My test video',
       averages: {attentionAverage: 0.58, moodAverage: 0.41, peopleAverage: 3},
       framesArray: [{
         amountOfPeople: 4,
         attentionScore: 0.56,
         isImportantAttention: false,
-        isImportantMood: true,
+        isImportantMood: false,
         isImportantPeople: true,
-        moodScore: 0.49
+        moodScore: 0.49,
+        importantFrame: 'testVideo/1.jpg',
       }, {
         amountOfPeople: 3,
         attentionScore: 0.61,
         isImportantAttention: false,
-        isImportantMood: true,
+        isImportantMood: false,
         isImportantPeople: false,
-        moodScore: 0.32
+        moodScore: 0.32,
       }],
       peaks: {attentionPeak: 0.61, moodPeak: 0.49, peoplePeak: 4},
       valleys: {attentionValley: 0.56, moodValley: 0.32, peopleValley: 3}
@@ -42,7 +46,11 @@ describe('Analyze Controller', () => {
 
     const request = {
       body: {
-        videoId: 'testVideo'
+        videoId: 'testVideo',
+        accuracy: 5,
+        duration: 30,
+        videoDate: '17/05/2022',
+        videoName: 'My test video',
       }
     } as Request;
     const response = {
