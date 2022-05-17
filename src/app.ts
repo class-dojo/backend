@@ -23,6 +23,8 @@ import HealthCheckController from './controllers/HealthCheckController';
 import AnalyzeController from './controllers/AnalyzeController';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import S3LinkController from './controllers/S3LinkController';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import AnalyzedVideoResultController from './controllers/AnalyzedVideoResultController';
 
 
 // models
@@ -38,6 +40,8 @@ import SentimentModel from './models/SentimentModel';
 import S3LinkModel from './models/S3LinkModel';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import S3Model from './models/S3Model';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import S3GetAnalyzedVideoResultModel from './models/S3GetAnalyzedVideoResultModel';
 
 
 const srcDir = join(__dirname);

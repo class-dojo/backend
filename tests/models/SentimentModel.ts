@@ -32,7 +32,7 @@ describe('Sentiment model', () => {
     expect(finalResults.valleys.attentionValley).toBe(0.56);
     expect(finalResults.valleys.peopleValley).toBe(3);
     expect(finalResults.framesArray[0].isImportantAttention).toBe(false);
-    expect(finalResults.framesArray[0].isImportantMood).toBe(true);
+    expect(finalResults.framesArray[0].isImportantMood).toBe(false);
     expect(finalResults.framesArray[0].isImportantPeople).toBe(true);
 
     // check for averages

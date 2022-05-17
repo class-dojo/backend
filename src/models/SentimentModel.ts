@@ -54,7 +54,8 @@ export default class SentimentModel extends BaseModel {
     let attentionValley;
     let peoplePeak;
     let peopleValley;
-    const isImportantTreshold = 0.1;
+    const isImportantTreshold = 0.3;
+    let imagesIndex = 0;
     const sums = {
       attention: 0,
       mood: 0,
@@ -65,9 +66,7 @@ export default class SentimentModel extends BaseModel {
     this.sortImages(images);
 
     const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
-
     for (const data of detectedFacesImages) {
-
       const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;
@@ -99,11 +98,15 @@ export default class SentimentModel extends BaseModel {
       attentionAverage: parseFloat((sums.attention  / framesArray.length).toFixed(2)),
       peopleAverage: Math.floor( sums.people / framesArray.length )
     };
-    //calculating importance based on averages
-    for (const frame of framesArray) {
-      frame.isImportantAttention = this.calculateImportance(frame.attentionScore, averages.attentionAverage, isImportantTreshold);
-      frame.isImportantMood = this.calculateImportance(frame.moodScore, averages.moodAverage, isImportantTreshold);
-      frame.isImportantPeople = this.calculateImportance(frame.amountOfPeople, averages.peopleAverage, isImportantTreshold);
+    //calculating importance based on averages and previus value
+    for (const frameIndex in framesArray) {
+      framesArray[frameIndex].isImportantAttention = (this.calculateImportance(framesArray[frameIndex].attentionScore, averages.attentionAverage, isImportantTreshold) && framesArray[+frameIndex - 1]?.isImportantAttention !== true);
+      framesArray[frameIndex].isImportantMood = (this.calculateImportance(framesArray[frameIndex].moodScore, averages.moodAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantMood !== true);
+      framesArray[frameIndex].isImportantPeople = (this.calculateImportance(framesArray[frameIndex].amountOfPeople, averages.peopleAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantPeople !== true);
+      if (framesArray[frameIndex].isImportantAttention || framesArray[frameIndex].isImportantMood || framesArray[frameIndex].isImportantPeople) {
+        framesArray[frameIndex].importantFrame = images[imagesIndex].Key;
+      }
+      imagesIndex++;
     }
     const response : IFinalResponse = {
       framesArray,

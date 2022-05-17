@@ -25,7 +25,11 @@ export default class AnalyzeController extends BaseController {
       // send them to aws rekognition for analysis - SentimentModel
       // make transformation magic on the output - SentimentModel
       const dataAfterMagic = await this.sentimentModel.analyzeImages(imagesToAnalyze);
-
+      // add metadata to final result
+      dataAfterMagic.videoName = request.body.videoName;
+      dataAfterMagic.videoDate = request.body.videoDate;
+      dataAfterMagic.duration = request.body.duration;
+      dataAfterMagic.accuracy = request.body.accuracy;
       // save it to json and to a bucket - ImageModel
       // send the output back to FE
       await this.imageModel.storeFinalResults(dataAfterMagic, request.body.videoId);
