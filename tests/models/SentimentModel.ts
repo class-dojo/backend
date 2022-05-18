@@ -21,7 +21,6 @@ describe('Sentiment model', () => {
 
     const finalResults = await sentimentModel.analyzeImages([{Key: 'testVideo/2.jpg'},{Key: 'testVideo/1.jpg'}]);
     // check frame array
-
     expect(finalResults.framesArray).toHaveLength(2);
 
     // check for peaks and valleys
@@ -34,6 +33,11 @@ describe('Sentiment model', () => {
     expect(finalResults.framesArray[0].isImportantAttention).toBe(false);
     expect(finalResults.framesArray[0].isImportantMood).toBe(false);
     expect(finalResults.framesArray[0].isImportantPeople).toBe(true);
+
+    // check for faces
+    expect(finalResults.framesArray[0].facesDetail).toHaveLength(4); // 4 faces
+    expect(Object.keys(finalResults.framesArray[0].facesDetail[0])).toStrictEqual(['boundingBox', 'topEmotion']); // 4 faces
+
 
     // check for averages
     expect(finalResults.averages.attentionAverage).toBe(0.58);

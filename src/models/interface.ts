@@ -1,3 +1,5 @@
+import {BoundingBox, Emotion} from 'aws-sdk/clients/rekognition';
+
 export interface IRecognitionResponse {
   FaceDetails: IFaceDetails[];
  }
@@ -9,12 +11,18 @@ export interface IFaceDetails {
 export interface IEmotion {
      Type?: string,
      Confidence?: number
- }
+}
+
+export interface IFacesDetail {
+  topEmotion: Emotion,
+  boundingBox: BoundingBox
+}
 
 export interface IFrameInfo {
   amountOfPeople : number,
   attentionScore: number,
   moodScore: number,
+  facesDetail?: IFacesDetail[],
   isImportantPeople? : boolean,
   isImportantAttention? : boolean,
   isImportantMood? : boolean,

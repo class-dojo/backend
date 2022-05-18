@@ -1,7 +1,7 @@
 import BaseModel from './BaseModel';
 import RekognitionModel from './RekognitionModel';
-import {IFaceDetails, IFinalResponse, IFrameInfo} from './interface';
-import {DetectFacesResponse, FaceDetailList, FaceDetail} from 'aws-sdk/clients/rekognition';
+import {IFaceDetails, IFacesDetail, IFinalResponse, IFrameInfo} from './interface';
+import {DetectFacesResponse, FaceDetailList, FaceDetail, Emotions, Emotion} from 'aws-sdk/clients/rekognition';
 import { ObjectList } from 'aws-sdk/clients/s3';
 
 
@@ -10,16 +10,27 @@ export default class SentimentModel extends BaseModel {
     super();
   }
 
-  manipulateData (facesArray : FaceDetailList) {
+  manipulateData (facesArray : FaceDetailList): IFrameInfo {
     let moodScore = 0;
     let attentionScore = 0;
 
+    const facesDetail: IFacesDetail[] = [];
+
     for (let face of facesArray) {
-      face = this.removeUselessProps(face);
-      moodScore += this.calculateMoodScore(face);
-      attentionScore += this.calculateAttentionScore(face);
+      const faceInfo: IFacesDetail = {
+        boundingBox: face.BoundingBox,
+        topEmotion: SentimentModel.getMostProminentEmotion([...face.Emotions])
+      };
+
+      facesDetail.push(faceInfo);
+
+      face = SentimentModel.removeUselessProps(face);
+      moodScore += SentimentModel.calculateMoodScore(face);
+      attentionScore += SentimentModel.calculateAttentionScore(face);
+
+
     }
-    const amountOfPeople = this.AmountOfPeople(facesArray);
+    const amountOfPeople = SentimentModel.AmountOfPeople(facesArray);
     if (amountOfPeople > 0) {
       moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
       attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
@@ -28,7 +39,8 @@ export default class SentimentModel extends BaseModel {
     return {
       attentionScore,
       moodScore,
-      amountOfPeople
+      amountOfPeople,
+      facesDetail
     };
   }
   sortImages (images : ObjectList) {
@@ -67,7 +79,7 @@ export default class SentimentModel extends BaseModel {
 
     const detectedFacesImages = await this.feedImageToAWSReckon(images); //needs to be parsed in production probably
     for (const data of detectedFacesImages) {
-      const frameInfo : IFrameInfo = this.manipulateData(data.FaceDetails);
+      const frameInfo = this.manipulateData(data.FaceDetails);
       framesArray.push(frameInfo);
       sums.attention += frameInfo.attentionScore;
       sums.mood += frameInfo.moodScore;
@@ -98,11 +110,11 @@ export default class SentimentModel extends BaseModel {
       attentionAverage: parseFloat((sums.attention  / framesArray.length).toFixed(2)),
       peopleAverage: Math.floor( sums.people / framesArray.length )
     };
-    //calculating importance based on averages and previus value
+    //calculating importance based on averages and previous value
     for (const frameIndex in framesArray) {
-      framesArray[frameIndex].isImportantAttention = (this.calculateImportance(framesArray[frameIndex].attentionScore, averages.attentionAverage, isImportantTreshold) && framesArray[+frameIndex - 1]?.isImportantAttention !== true);
-      framesArray[frameIndex].isImportantMood = (this.calculateImportance(framesArray[frameIndex].moodScore, averages.moodAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantMood !== true);
-      framesArray[frameIndex].isImportantPeople = (this.calculateImportance(framesArray[frameIndex].amountOfPeople, averages.peopleAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantPeople !== true);
+      framesArray[frameIndex].isImportantAttention = (SentimentModel.calculateImportance(framesArray[frameIndex].attentionScore, averages.attentionAverage, isImportantTreshold) && framesArray[+frameIndex - 1]?.isImportantAttention !== true);
+      framesArray[frameIndex].isImportantMood = (SentimentModel.calculateImportance(framesArray[frameIndex].moodScore, averages.moodAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantMood !== true);
+      framesArray[frameIndex].isImportantPeople = (SentimentModel.calculateImportance(framesArray[frameIndex].amountOfPeople, averages.peopleAverage, isImportantTreshold)&& framesArray[+frameIndex - 1]?.isImportantPeople !== true);
       if (framesArray[frameIndex].isImportantAttention || framesArray[frameIndex].isImportantMood || framesArray[frameIndex].isImportantPeople) {
         framesArray[frameIndex].importantFrame = images[imagesIndex].Key;
       }
@@ -125,7 +137,7 @@ export default class SentimentModel extends BaseModel {
     return response;
   }
 
-  private removeUselessProps (faceDetails : FaceDetail) {
+  private static removeUselessProps (faceDetails : FaceDetail) {
     const cleanFaceDetails : IFaceDetails = {
       Emotions: [],
     };
@@ -134,10 +146,13 @@ export default class SentimentModel extends BaseModel {
     }
     return cleanFaceDetails;
   }
-  private calculateMoodScore (faceDetails : FaceDetail) {
+  private static calculateMoodScore (faceDetails : FaceDetail) {
     let moodScore  = 0;
-    const confidence = parseFloat(faceDetails.Emotions[0].Confidence.toFixed(2));
-    switch (faceDetails.Emotions[0].Type) {
+
+    const topEmotion = SentimentModel.getMostProminentEmotion(faceDetails.Emotions);
+
+    const confidence = parseFloat(topEmotion.Confidence.toFixed(2));
+    switch (topEmotion.Type) {
     case 'CONFUSED':
       moodScore += 0.2 / 100 * confidence;
       break;
@@ -165,7 +180,7 @@ export default class SentimentModel extends BaseModel {
     }
     return parseFloat(moodScore.toFixed(2));
   }
-  private calculateAttentionScore (faceDetails : FaceDetail) {
+  private static calculateAttentionScore (faceDetails : FaceDetail) {
     let attentionScore = 0;
     for (const emotion of faceDetails.Emotions) {
       switch (emotion.Type) {
@@ -197,10 +212,20 @@ export default class SentimentModel extends BaseModel {
       return parseFloat(attentionScore.toFixed(2));
     }
   }
-  private AmountOfPeople (facesAnalysisArr : FaceDetailList) {
+  private static AmountOfPeople (facesAnalysisArr : FaceDetailList) {
     return facesAnalysisArr.length;
   }
-  private calculateImportance (score : number, average : number, threshold : number) {
+  private static calculateImportance (score : number, average : number, threshold : number) {
     return score >= (average + (average * threshold)) || score <= (average - (average * threshold));
+  }
+
+  private static getMostProminentEmotion (emotions: Emotions): Emotion {
+    // sort emotions by confidence descending
+    const sorted = emotions.sort((a, b) => {
+      return b.Confidence - a.Confidence;
+    });
+
+    // pick the first one
+    return sorted[0];
   }
 }
