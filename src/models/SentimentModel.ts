@@ -24,8 +24,8 @@ export default class SentimentModel extends BaseModel {
 
       facesDetail.push(faceInfo);
 
-      face = this.removeUselessProps(face);
-      moodScore += this.calculateMoodScore(face);
+      face = SentimentModel.removeUselessProps(face);
+      moodScore += SentimentModel.calculateMoodScore(face);
       attentionScore += SentimentModel.calculateAttentionScore(face);
 
 
@@ -137,7 +137,7 @@ export default class SentimentModel extends BaseModel {
     return response;
   }
 
-  private removeUselessProps (faceDetails : FaceDetail) {
+  private static removeUselessProps (faceDetails : FaceDetail) {
     const cleanFaceDetails : IFaceDetails = {
       Emotions: [],
     };
@@ -146,10 +146,13 @@ export default class SentimentModel extends BaseModel {
     }
     return cleanFaceDetails;
   }
-  private calculateMoodScore (faceDetails : FaceDetail) {
+  private static calculateMoodScore (faceDetails : FaceDetail) {
     let moodScore  = 0;
-    const confidence = parseFloat(faceDetails.Emotions[0].Confidence.toFixed(2));
-    switch (faceDetails.Emotions[0].Type) {
+
+    const topEmotion = SentimentModel.getMostProminentEmotion(faceDetails.Emotions);
+
+    const confidence = parseFloat(topEmotion.Confidence.toFixed(2));
+    switch (topEmotion.Type) {
     case 'CONFUSED':
       moodScore += 0.2 / 100 * confidence;
       break;
