@@ -14,9 +14,11 @@ export default class SentimentModel extends BaseModel {
     let moodScore = 0;
     let attentionScore = 0;
 
+    const removeNonFaces = facesArray.filter(face => face.Confidence >= 90);
+
     const facesDetail: IFacesDetail[] = [];
 
-    for (let face of facesArray) {
+    for (let face of removeNonFaces) {
       const faceInfo: IFacesDetail = {
         boundingBox: face.BoundingBox,
         topEmotion: SentimentModel.getMostProminentEmotion([...face.Emotions])
@@ -30,7 +32,7 @@ export default class SentimentModel extends BaseModel {
 
 
     }
-    const amountOfPeople = SentimentModel.AmountOfPeople(facesArray);
+    const amountOfPeople = SentimentModel.AmountOfPeople(removeNonFaces);
     if (amountOfPeople > 0) {
       moodScore = parseFloat((moodScore / amountOfPeople).toFixed(2));
       attentionScore = parseFloat((attentionScore / amountOfPeople).toFixed(2));
