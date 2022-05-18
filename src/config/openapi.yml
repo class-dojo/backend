@@ -167,9 +167,9 @@ components:
                     Height: 0.19836215674877167
                     Left: 0.20270614326000214
                     Top: 0.16728106141090393
-                    topEmotion:
-                      Type: CALM
-                      Confidence: 77.0023193359375
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 77.0023193359375
               isImportantAttention: true
               isImportantMood: true
               isImportantPeople: true
@@ -198,9 +198,9 @@ components:
                     Height: 0.16228044033050537
                     Left: 0.7046615481376648
                     Top: 0.6824442744255066
-                    topEmotion:
-                      Type: CALM
-                      Confidence: 71.59647369384766
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 71.59647369384766
               isImportantAttention: false
               isImportantMood: false
               isImportantPeople: false
@@ -350,12 +350,62 @@ components:
             - attentionScore: 0.65
               moodScore: 0.39
               amountOfPeople: 19
+              facesDetail:
+                - boundingBox:
+                    Width: 0.12799087166786194
+                    Height: 0.31783920526504517
+                    Left: 0.6253703832626343
+                    Top: 0.08763377368450165
+                  topEmotion:
+                    Type: CONFUSED
+                    Confidence: 99.63795471191406
+                - boundingBox:
+                    Width: 0.09457354992628098
+                    Height: 0.22096648812294006
+                    Left: 0.17085716128349304
+                    Top: 0.6672175526618958
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 96.443603515625
+                - boundingBox:
+                    Width: 0.0846099704504013
+                    Height: 0.19836215674877167
+                    Left: 0.20270614326000214
+                    Top: 0.16728106141090393
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 77.0023193359375
               isImportantAttention: true
               isImportantMood: true
               isImportantPeople: true
             - attentionScore: 0.6
               moodScore: 0.4
               amountOfPeople: 19
+              facesDetail:
+                - boundingBox:
+                    Width: 0.13665208220481873
+                    Height: 0.27526575326919556
+                    Left: 0.198362797498703
+                    Top: 0.7325266599655151
+                  topEmotion:
+                    Type: SAD
+                    Confidence: 98.96540069580078
+                - boundingBox:
+                    Width: 0.09949468821287155
+                    Height: 0.24421581625938416
+                    Left: 0.24007287621498108
+                    Top: 0.12005813419818878
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 99.75934600830078
+                - boundingBox:
+                    Width: 0.07053308933973312
+                    Height: 0.16228044033050537
+                    Left: 0.7046615481376648
+                    Top: 0.6824442744255066
+                  topEmotion:
+                    Type: CALM
+                    Confidence: 71.59647369384766
               isImportantAttention: false
               isImportantMood: false
               isImportantPeople: false
