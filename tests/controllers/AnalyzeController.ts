@@ -73,8 +73,9 @@ describe('Analyze Controller', () => {
         amountOfPeople: 3,
         attentionScore: 0.61,
         isImportantAttention: false,
-        isImportantMood: false,
+        isImportantMood: true,
         isImportantPeople: false,
+        importantFrame: 'testVideo/2.jpg',
         moodScore: 0.32,
         facesDetail: [
           {
